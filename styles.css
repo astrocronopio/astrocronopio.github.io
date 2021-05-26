@@ -1,0 +1,10 @@
+.nav-wrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 38px;
+}
+
+.left-sidebar{
+    padding-right: 40px;
+
+}
