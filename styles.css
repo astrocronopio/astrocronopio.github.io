@@ -1,5 +1,5 @@
 .nav-wrapper{
-    display: flex;
+    display: block;
     justify-content: space-between;
     padding: 38px;
 }
