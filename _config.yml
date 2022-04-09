@@ -6,6 +6,8 @@ permalink: /:title
 
 #baseurl: /dark-side
 
+# theme: monophase
+
 sass: 
   style: compressed
 
@@ -19,7 +21,7 @@ markdown: kramdown
 
 
 # Tracker
-analytics: UA-83979019-1
+# analytics: UA-83979019-1
 
 
 #optimization

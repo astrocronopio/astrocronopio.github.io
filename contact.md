@@ -1,4 +1,5 @@
 ---
+permalink: /contact.html
 layout: page
 title: Social
 ---
