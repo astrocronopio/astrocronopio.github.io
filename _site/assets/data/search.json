@@ -1,0 +1,39 @@
+[
+  
+  {
+    "title"    : "Song - April 2022",
+    "category" : "music, playlist",
+    "url"      : "/music/playlist/2022/04/28/April-Songs/",
+    "date"     : "April 28, 2022",
+    "excerpt"  : "My Current Favorite Song:\n\n* The Comfort of a Laugh Track\n\n\n  Why is it so hard to speak \nTo people I don’t know\nIs it something that you learn \nWhen constantly alone? \nWhen did I become a man \nTrapped inside a ghost? \n\n\nThe slowed version is way ...",
+    "content"  : "My Current Favorite Song:\n\n* The Comfort of a Laugh Track\n\n\n  Why is it so hard to speak \nTo people I don’t know\nIs it something that you learn \nWhen constantly alone? \nWhen did I become a man \nTrapped inside a ghost? \n\n\nThe slowed version is way better than the original\n\n"
+} ,
+  
+  {
+    "title"    : "Task 1 - Google CTF Beginners Quest 2021",
+    "category" : "coding, CTF, google",
+    "url"      : "/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/",
+    "date"     : "February 28, 2022",
+    "excerpt"  : "CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: CTF{This_is_how_flag...",
+    "content"  : "CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: CTF{This_is_how_flags_usually_look_like}.\n\nA really nice introduction to what CTF competition is  LiveOverflow YouTube Channel with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing them.\n\nYou can go and check this CFT at https://capturetheflag.withgoogle.com/beginners-quest.\n\nTask 1:\n\nGet the password for this website https://cctv-web.2021.ctfcompetition.com/, this is what it looks like.\n\n\n\nCheck the inspect the html code using your favorite web browser. You get the following code:\n\nconst checkPassword = () =&amp;gt; {\n  const v = document.getElementById(&quot;password&quot;).value;\n  const p = Array.from(v).map(a =&amp;gt; 0xCafe + a.charCodeAt(0));\n\n  if(p[0] === 52037 &amp;amp;&amp;amp;\n     p[6] === 52081 &amp;amp;&amp;amp;\n     p[5] === 52063 &amp;amp;&amp;amp;\n     p[1] === 52077 &amp;amp;&amp;amp;\n     p[9] === 52077 &amp;amp;&amp;amp;\n     p[10] === 52080 &amp;amp;&amp;amp;\n     p[4] === 52046 &amp;amp;&amp;amp;\n     p[3] === 52066 &amp;amp;&amp;amp;\n     p[8] === 52085 &amp;amp;&amp;amp;\n     p[7] === 52081 &amp;amp;&amp;amp;\n     p[2] === 52077 &amp;amp;&amp;amp;\n     p[11] === 52066) {\n    window.location.replace(v + &quot;.html&quot;);\n  } else {\n    alert(&quot;Wrong password!&quot;);\n  }\n}\n\n\nWe enter the code and the program stores it inside the const v, then the code transforms the characters after adding 0xCafe. To obtain the password, we need to check what values are stored in the p[i]: Python is our friend.\n\nimport numpy as np\n\np = np.zeros(12)\n\n\np[0] = 52037\np[6] = 52081\np[5] = 52063\np[1] = 52077\np[9] = 52077\np[10]= 52080\np[4] = 52046\np[3] = 52066\np[8] = 52085\np[7] = 52081\np[2] = 52077 \np[11]= 52066\n\n\np -= int(&#39;0xCafe&#39;,16) # Deletes the offset\n\nfor i in p: \n     # Print the password\n     print(chr(int(i)), end=&quot;&quot;)\n\n\n\nAnd the password is GoodPassword, it takes you to a new page with the flag at the bottom.\n\n\n"
+} ,
+  
+  {
+    "title"    : "Ayuda para el Ingreso IB",
+    "category" : "",
+    "url"      : "/ingreso.html",
+    "date"     : "February 1, 2022",
+    "excerpt"  : "Editado por última vez: 14 de Enero, 2022\n\n\n  Querido intentante (como los alumnos de IB le dicen a los que planean rendir el examen de ingreso), bienvenido a esta locura. Podes encontrar cosas útiles y no tan útiles para ayudarte a ser un ingresa...",
+    "content"  : "Editado por última vez: 14 de Enero, 2022\n\n\n  Querido intentante (como los alumnos de IB le dicen a los que planean rendir el examen de ingreso), bienvenido a esta locura. Podes encontrar cosas útiles y no tan útiles para ayudarte a ser un ingresante del IB.\nLas ayudas son más para estudiantes de grado, pero posgrado y doctorado pueden pasar a mirar.\n\n\nLinks Oficiales:\n\n\n  \n    Página del Instituto Balseiro: Ahí están los formularios, los deadlines, etc. Empezá por ahí.!\n  \n  \n    El Oráculo: Casi todos los exámenes de ingreso anteriores están ahí. Podés preguntar cosas ahí y te va a responder de forma “oficial”.\n  \n\n\nLinks no oficiales:\n\nEstas son cosas manejadas por ex-alumnos, no esperes seriedad pero si vas a buscar ayuda la vas a encontrar\n\nPara hablar con alumnos/egresados/otros intentantes\n\n\n  Server de Discord\n  Telegram\n  WhatsApp\n\n\nCarpetas con exámenes, ayudas, propuestas de solución, etc.\nToma las propuestas de solución con pinzas, cualquier duda podés preguntar al oráculo:\n\n\n  Examenes: Libros, examenes, soluciones y más\n  Examenes+: lista de muchos examenes + extra\n  Examenes++: lista de muchos examenes\n  Examenes+++: Soluciones de un alumno separados por tema\n\n\nAyudas para antes y después del examen\n\nEstas guías están abiertas a comentarios, son cosas que nosotros (alumnos y egresados involucrados en los grupos) pensamos que son  relevantes:\n\n\n  Ayuda para el examen según algunos alumnos/egresados\n  Ayuda para la entrevista\n  ¿Cómo es vivir en el IB-CAB?: si para la desgracia de tu vida social, ingresaste.\n\n"
+} ,
+  
+  {
+    "title"    : "Github Repos of NN and DNN classes/code",
+    "category" : "",
+    "url"      : "/gitgraduate.html",
+    "date"     : "January 1, 2022",
+    "excerpt"  : "Different repos for the people, I hope you find them useful\n\nNN Clases/Code\n\nBasic Neural Network introduction exercises  in this link.\n\nDNN Clases/Code\n\nSolutions to tutorial classes and more in this link.\n\nResources for HU ML für Physiker classe...",
+    "content"  : "Different repos for the people, I hope you find them useful\n\nNN Clases/Code\n\nBasic Neural Network introduction exercises  in this link.\n\nDNN Clases/Code\n\nSolutions to tutorial classes and more in this link.\n\nResources for HU ML für Physiker classes - Winter Term 2021/2022\n\nDatasets use for Exercises 4 to 6,  here\n"
+} 
+  
+]
