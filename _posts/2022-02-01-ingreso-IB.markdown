@@ -2,6 +2,7 @@
 permalink: /ingreso.html
 layout: post
 title:  "Ayuda para el Ingreso IB"
+categories: [spanish]
 ---
 
 Editado por última vez: 14 de Enero, 2022

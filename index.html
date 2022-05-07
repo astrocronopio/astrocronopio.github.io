@@ -3,11 +3,21 @@ layout: default
 ---
 
 
+<div>
+  Hello, I'm Evelyn and this my personal website. I'm a physicist who like to code. I have been checking out <a href="code.html">CTFs, competitive programming & Kaggle</a> and I post some of the things I have learned in the process. 
+</div>
+
+<hr />
+
+<div>
+  <h1>All Posts</h1>
+</div>
+
 <div class="posts">
   {% for post in paginator.posts %}
   <article class="post">
 
-    <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+    <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
 
     <div class="entry">
       {% if post.content contains '<!--more-->' %}
@@ -16,7 +26,7 @@ layout: default
 
       {% else %}
 
-      {{ post.excerpt | markdownify | strip_html | truncate: 160 }}
+      {{ post.excerpt | markdownify | strip_html | truncate: 150 }}
 
       {% endif %}
     </div>

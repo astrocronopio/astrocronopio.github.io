@@ -9,7 +9,7 @@
 
 <meta name="description" content="CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: CTF{This_is_how_flags_usually_look_like}.
 
-A really nice introduction to what CTF competition is  LiveOverflow YouTube Channel with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing them.
+A really nice introduction to what CTF competition is  LiveOverflow YouTube Channel with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing some of them.
 
 You can go and check this CFT at https://capturetheflag.withgoogle.com/beginners-quest.
 
@@ -44,12 +44,13 @@ const checkPassword = () =&gt; {
 }
 
 
-We enter the code and the program stores it inside the const v, then the code transforms the characters after adding 0xCafe. To obtain the password, we need to check what values are stored in the p[i]: Python is our friend.
+We enter the code and the program stores it inside the const v, then the code transforms the characters into integer values after adding 0xCafe. To obtain the password, we need to check what values are stored in the p[i]: Python is our friend.
 
 import numpy as np
 
-p = np.zeros(12)
+# Checking the code, we need at least 12 values
 
+p = np.zeros(12)
 
 p[0] = 52037
 p[6] = 52081
@@ -62,10 +63,13 @@ p[3] = 52066
 p[8] = 52085
 p[7] = 52081
 p[2] = 52077 
-p[11]= 52066
+p[11]= 52066 #12 values
 
+#Convert 0xCafe to integer value
+#16 is the ASCII base, represented by '0x'
+offset = int('0xCafe',16) 
 
-p -= int('0xCafe',16) # Deletes the offset
+p -=  offset # Deletes the offset 
 
 for i in p: 
      # Print the password
@@ -79,7 +83,7 @@ And the password is GoodPassword, it takes you to a new page with the flag at th
 " />
 <meta property="og:description" content="CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: CTF{This_is_how_flags_usually_look_like}.
 
-A really nice introduction to what CTF competition is  LiveOverflow YouTube Channel with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing them.
+A really nice introduction to what CTF competition is  LiveOverflow YouTube Channel with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing some of them.
 
 You can go and check this CFT at https://capturetheflag.withgoogle.com/beginners-quest.
 
@@ -114,12 +118,13 @@ const checkPassword = () =&gt; {
 }
 
 
-We enter the code and the program stores it inside the const v, then the code transforms the characters after adding 0xCafe. To obtain the password, we need to check what values are stored in the p[i]: Python is our friend.
+We enter the code and the program stores it inside the const v, then the code transforms the characters into integer values after adding 0xCafe. To obtain the password, we need to check what values are stored in the p[i]: Python is our friend.
 
 import numpy as np
 
-p = np.zeros(12)
+# Checking the code, we need at least 12 values
 
+p = np.zeros(12)
 
 p[0] = 52037
 p[6] = 52081
@@ -132,10 +137,13 @@ p[3] = 52066
 p[8] = 52085
 p[7] = 52081
 p[2] = 52077 
-p[11]= 52066
+p[11]= 52066 #12 values
 
+#Convert 0xCafe to integer value
+#16 is the ASCII base, represented by '0x'
+offset = int('0xCafe',16) 
 
-p -= int('0xCafe',16) # Deletes the offset
+p -=  offset # Deletes the offset 
 
 for i in p: 
      # Print the password
@@ -156,7 +164,7 @@ And the password is GoodPassword, it takes you to a new page with the flag at th
 
 
 
-    <title>Task 1 - Google CTF Beginners Quest 2021 – evelyn@home – Writings, Code & Miscellanea.</title>
+    <title>Task 1 - Google CTF Beginners Quest 2021 – evelyn@home – Code & Miscellanea.</title>
 
     <link rel="stylesheet" type="text/css" href="/style.css"/>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/ress/dist/ress.min.css"/>
@@ -179,7 +187,7 @@ And the password is GoodPassword, it takes you to a new page with the flag at th
     <!-- <meta name="msapplication-TileImage" content="/assets/image/favicon-144x144.png"> -->
     <meta name="msapplication-config" content="/assets/image/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    <link rel="alternate" type="application/rss+xml" title="evelyn@home - Writings, Code & Miscellanea." href="/feed.xml"/>
+    <link rel="alternate" type="application/rss+xml" title="evelyn@home - Code & Miscellanea." href="/feed.xml"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous" media="print" onload="this.media='all'"/>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.5/plyr.css" media="print" onload="this.media='all'"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" media="print" onload="this.media='all'"/>
@@ -195,19 +203,19 @@ And the password is GoodPassword, it takes you to a new page with the flag at th
 
           <div class="site-info">
             <h1 class="site-name"><a href="/">evelyn@home</a></h1>
-            <p class="site-description">Writings, Code & Miscellanea.</p>
+            <p class="site-description">Code & Miscellanea.</p>
           </div>
           <nav class="nav-menu">
             
-  <a class="nav-menu-item" href="/">Home</a>
+  <a class="nav-menu-item" href="/about">About</a>
 
   <a class="nav-menu-item" href="/projects">Projects</a>
 
-  <a class="nav-menu-item" href="/about">About</a>
-
   <a class="nav-menu-item" href="/media/Coronel-Resume.pdf">Resumé</a>
 
-  <a class="nav-menu-item" href="/search">Search</a>
+  <a class="nav-menu-item" href="/contact.html">Contact</a>
+
+  <a class="nav-menu-item" href="/search">🔍</a>
 
 
           </nav>
@@ -223,7 +231,7 @@ And the password is GoodPassword, it takes you to a new page with the flag at th
   <div class="entry">
     <p>CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: <code class="language-plaintext highlighter-rouge">CTF{This_is_how_flags_usually_look_like}</code>.</p>
 
-<p>A really nice introduction to what CTF competition is  <a href="https://www.youtube.com/watch?v=BFMmSJ3PRZM">LiveOverflow YouTube Channel</a> with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing them.</p>
+<p>A really nice introduction to what CTF competition is  <a href="https://www.youtube.com/watch?v=BFMmSJ3PRZM">LiveOverflow YouTube Channel</a> with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing some of them.</p>
 
 <p>You can go and check this CFT at <a href="https://capturetheflag.withgoogle.com/beginners-quest">https://capturetheflag.withgoogle.com/beginners-quest</a>.</p>
 
@@ -258,12 +266,13 @@ And the password is GoodPassword, it takes you to a new page with the flag at th
 }
 
 </code></pre></div></div>
-<p>We enter the code and the program stores it inside the <code class="language-plaintext highlighter-rouge">const v</code>, then the code transforms the characters after adding <code class="language-plaintext highlighter-rouge">0xCafe</code>. To obtain the password, we need to check what values are stored in the <code class="language-plaintext highlighter-rouge">p[i]</code>: Python is our friend.</p>
+<p>We enter the code and the program stores it inside the <code class="language-plaintext highlighter-rouge">const v</code>, then the code transforms the characters into integer values after adding <code class="language-plaintext highlighter-rouge">0xCafe</code>. To obtain the password, we need to check what values are stored in the <code class="language-plaintext highlighter-rouge">p[i]</code>: Python is our friend.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
 
-p = np.zeros(12)
+# Checking the code, we need at least 12 values
 
+p = np.zeros(12)
 
 p[0] = 52037
 p[6] = 52081
@@ -276,10 +285,13 @@ p[3] = 52066
 p[8] = 52085
 p[7] = 52081
 p[2] = 52077 
-p[11]= 52066
+p[11]= 52066 #12 values
 
+#Convert 0xCafe to integer value
+#16 is the ASCII base, represented by '0x'
+offset = int('0xCafe',16) 
 
-p -= int('0xCafe',16) # Deletes the offset
+p -=  offset # Deletes the offset 
 
 for i in p: 
      # Print the password
@@ -330,14 +342,6 @@ for i in p:
   </div>
 </a>
 
-<!-- Sharingbutton Tumblr -->
-<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Task 1 - Google CTF Beginners Quest 2021&amp;content=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/&amp;canonicalUrl=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/&amp;shareSource=tumblr_share_button" title="Share on Tumblr" target="_blank" rel="noopener" aria-label="">
-  <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5.5v5h5v4h-5V15c0 5 3.5 4.4 6 2.8v4.4c-6.7 3.2-12 0-12-4.2V9.5h-3V6.7c1-.3 2.2-.7 3-1.3.5-.5 1-1.2 1.4-2 .3-.7.6-1.7.7-3h3.8z"/></svg>
-    </div>
-  </div>
-</a>
-
 <!-- Sharingbutton E-Mail -->
 <a class="resp-sharing-button__link" href="mailto:?subject=Task 1 - Google CTF Beginners Quest 2021&body=You can read more at this site%2C%0Ahttp://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/" title="Share via E-Mail" target="_self" rel="noopener" aria-label="">
   <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
@@ -346,13 +350,6 @@ for i in p:
   </div>
 </a>
 
-<!-- Sharingbutton Pinterest -->
-<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/&amp;media=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/&amp;description=Task 1 - Google CTF Beginners Quest 2021" title="Share on Pinterest" target="_blank" rel="noopener" aria-label="">
-  <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.14.5C5.86.5 2.7 5 2.7 8.75c0 2.27.86 4.3 2.7 5.05.3.12.57 0 .66-.33l.27-1.06c.1-.32.06-.44-.2-.73-.52-.62-.86-1.44-.86-2.6 0-3.33 2.5-6.32 6.5-6.32 3.55 0 5.5 2.17 5.5 5.07 0 3.8-1.7 7.02-4.2 7.02-1.37 0-2.4-1.14-2.07-2.54.4-1.68 1.16-3.48 1.16-4.7 0-1.07-.58-1.98-1.78-1.98-1.4 0-2.55 1.47-2.55 3.42 0 1.25.43 2.1.43 2.1l-1.7 7.2c-.5 2.13-.08 4.75-.04 5 .02.17.22.2.3.1.14-.18 1.82-2.26 2.4-4.33.16-.58.93-3.63.93-3.63.45.88 1.8 1.65 3.22 1.65 4.25 0 7.13-3.87 7.13-9.05C20.5 4.15 17.18.5 12.14.5z"/></svg>
-    </div>
-  </div>
-</a>
 
 <!-- Sharingbutton LinkedIn -->
 <a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/&amp;title=Task 1 - Google CTF Beginners Quest 2021&amp;summary=Task 1 - Google CTF Beginners Quest 2021&amp;source=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/" title="Share on LinkedIn" target="_blank" rel="noopener" aria-label="">
@@ -366,38 +363,6 @@ for i in p:
 <a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/&amp;resubmit=true&amp;title=Task 1 - Google CTF Beginners Quest 2021" title="Share on Reddit" target="_blank" rel="noopener" aria-label="">
   <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z"/></svg>
-    </div>
-  </div>
-</a>
-
-<!-- Sharingbutton XING -->
-<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/;title=Task 1 - Google CTF Beginners Quest 2021" title="Share on XING" target="_blank" rel="noopener" aria-label="">
-  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.2 9.7l-3-5.4C7.2 4 7 4 6.8 4h-5c-.3 0-.4 0-.5.2v.5L4 10 .4 16v.5c0 .2.2.3.4.3h5c.3 0 .4 0 .5-.2l4-6.6v-.5zM24 .2l-.5-.2H18s-.2 0-.3.3l-8 14v.4l5.2 9c0 .2 0 .3.3.3h5.4s.3 0 .4-.2c.2-.2.2-.4 0-.5l-5-8.8L24 .7V.2z"/></svg>
-    </div>
-  </div>
-</a>
-
-<!-- Sharingbutton WhatsApp -->
-<a class="resp-sharing-button__link" href="whatsapp://send?text=Task 1 - Google CTF Beginners Quest 2021%20http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/" title="Share via WhatsApp" target="_blank" rel="noopener" aria-label="">
-  <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z"/></svg>
-    </div>
-  </div>
-</a>
-
-<!-- Sharingbutton Hacker News -->
-<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/&amp;t=Task 1 - Google CTF Beginners Quest 2021" title="Share on Hacker News" target="_blank" rel="noopener" aria-label="">
-  <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><path fill-rule="evenodd" d="M60.94 82.314L17 0h20.08l25.85 52.093c.397.927.86 1.888 1.39 2.883.53.994.995 2.02 1.393 3.08.265.4.463.764.596 1.095.13.334.262.63.395.898.662 1.325 1.26 2.618 1.79 3.877.53 1.26.993 2.42 1.39 3.48 1.06-2.254 2.22-4.673 3.48-7.258 1.26-2.585 2.552-5.27 3.877-8.052L103.49 0h18.69L77.84 83.308v53.087h-16.9v-54.08z"></path></svg>
-    </div>
-  </div>
-</a>
-
-<!-- Sharingbutton VK -->
-<a class="resp-sharing-button__link" href="http://vk.com/share.php?title=Task 1 - Google CTF Beginners Quest 2021&amp;url=http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/" title="Share on VK" target="_blank" rel="noopener" aria-label="">
-  <div class="resp-sharing-button resp-sharing-button--vk resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.547 7h-3.29a.743.743 0 0 0-.655.392s-1.312 2.416-1.734 3.23C14.734 12.813 14 12.126 14 11.11V7.603A1.104 1.104 0 0 0 12.896 6.5h-2.474a1.982 1.982 0 0 0-1.75.813s1.255-.204 1.255 1.49c0 .42.022 1.626.04 2.64a.73.73 0 0 1-1.272.503 21.54 21.54 0 0 1-2.498-4.543.693.693 0 0 0-.63-.403h-2.99a.508.508 0 0 0-.48.685C3.005 10.175 6.918 18 11.38 18h1.878a.742.742 0 0 0 .742-.742v-1.135a.73.73 0 0 1 1.23-.53l2.247 2.112a1.09 1.09 0 0 0 .746.295h2.953c1.424 0 1.424-.988.647-1.753-.546-.538-2.518-2.617-2.518-2.617a1.02 1.02 0 0 1-.078-1.323c.637-.84 1.68-2.212 2.122-2.8.603-.804 1.697-2.507.197-2.507z"/></svg>
     </div>
   </div>
 </a>
@@ -507,6 +472,9 @@ for i in p:
     
     
   
+    
+    
+  
 
 
 
@@ -518,8 +486,8 @@ for i in p:
 
     
     <div class="related-posts-post">
-  <a href="/music/playlist/2022/04/28/April-Songs/">
-    Song - April 2022
+  <a href="/music/playlist/2022/04/28/Songs/">
+    Songs I really like
   </a>
 </div>
 
@@ -565,13 +533,13 @@ for i in p:
   <p>
     
     <span class="post-nav-label">Previous</span><br>
-    <a href="/ingreso.html">&#9194;&nbsp;Ayuda para el Ingreso IB</a>
+    <a href="/ingreso.html">Ayuda para el Ingreso IB</a>
     
   </p>
   <p>
     
     <span class="post-nav-label">Next</span><br>
-    <a href="/music/playlist/2022/04/28/April-Songs/">Song - April 2022&nbsp;&#9193;</a>
+    <a href="/music/playlist/2022/04/28/Songs/">Songs I really like</a>
     
   </p>
 </div>
@@ -584,7 +552,7 @@ for i in p:
 
     <div class="wrapper-footer">
       <div class="container">
-        <footer class="footer"><div class="social-icons"><a class="social-icon" href="https://twitter.com/pomberorajy"><i class="fa fa-twitter-square fa-2x" title="Twitter"></i></a><a class="social-icon" href="https://github.com/astrocronopio"><i class="fa fa-github-square fa-2x" title="GitHub"></i></a></div><div class="copyright">
+        <footer class="footer"><div class="social-icons"><a class="social-icon" href="/contact.html"><i class="fa fa-envelope-square fa-2x" title="Email"></i></a><a class="social-icon" href="https://twitter.com/pomberorajy"><i class="fa fa-twitter-square fa-2x" title="Twitter"></i></a><a class="social-icon" href="https://github.com/astrocronopio"><i class="fa fa-github-square fa-2x" title="GitHub"></i></a><a class="social-icon" href="https://www.linkedin.com/in/evelyn-coronel/"><i class="fa fa-linkedin-square fa-2x" title="LinkedIn"></i></a></div><div class="copyright">
             
             <p>&copy; 2022 evelyn@home. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/forever-jekyll/forever-jekyll" rel="nofollow">Forever Jekyll</a>.</p>
             

@@ -9,7 +9,7 @@ lang: "en"
 title: evelyn@home
 
 # Short bio or description (displayed in the header)t
-description: Writings, Code & Miscellanea.
+description: Code & Miscellanea.
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: /assets/image/avatar.png
@@ -30,29 +30,30 @@ baseurl: ""
 
 # Navigation menu
 navigation_links:
-  - title: Home
-    url: /
+  - title: About
+    url: /about
 
   - title: Projects
     url: /projects
 
-  - title: About
-    url: /about
 
   - title: Resumé
     url: /media/Coronel-Resume.pdf
     
+  - title: Contact
+    url: /contact.html
     
-  - title: Search
+
+  - title: 🔍
     url: /search
 
 
 
 # Footer icons
 footer_links:
-  # - title: Feed
-  #   url: feed.xml
-  #   icon: fa fa-rss-square
+  - title: Email
+    url: /contact.html
+    icon: fa fa-envelope-square
 
   - title: Twitter
     url: https://twitter.com/pomberorajy
@@ -61,6 +62,10 @@ footer_links:
   - title: GitHub
     url: https://github.com/astrocronopio
     icon: fa fa-github-square
+
+  - title:  LinkedIn
+    url: https://www.linkedin.com/in/evelyn-coronel/
+    icon: fa fa-linkedin-square 
 
 # Enter your copyright text if you wish to override the default one.
 #copyright: "This site is made with <3 by *me, myself, and I*."

@@ -7,7 +7,7 @@ categories: [coding, CTF, google]
 
 CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: `CTF{This_is_how_flags_usually_look_like}`.
 
-A really nice introduction to what CTF competition is  [LiveOverflow YouTube Channel](https://www.youtube.com/watch?v=BFMmSJ3PRZM) with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing them. 
+A really nice introduction to what CTF competition is  [LiveOverflow YouTube Channel](https://www.youtube.com/watch?v=BFMmSJ3PRZM) with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing some of them. 
 
 
 You can go and check this CFT at [https://capturetheflag.withgoogle.com/beginners-quest](https://capturetheflag.withgoogle.com/beginners-quest).
@@ -45,13 +45,14 @@ const checkPassword = () => {
 }
 
 ```
-We enter the code and the program stores it inside the `const v`, then the code transforms the characters after adding `0xCafe`. To obtain the password, we need to check what values are stored in the `p[i]`: Python is our friend.
+We enter the code and the program stores it inside the `const v`, then the code transforms the characters into integer values after adding `0xCafe`. To obtain the password, we need to check what values are stored in the `p[i]`: Python is our friend.
 
 ```
 import numpy as np
 
-p = np.zeros(12)
+# Checking the code, we need at least 12 values
 
+p = np.zeros(12)
 
 p[0] = 52037
 p[6] = 52081
@@ -64,10 +65,13 @@ p[3] = 52066
 p[8] = 52085
 p[7] = 52081
 p[2] = 52077 
-p[11]= 52066
+p[11]= 52066 #12 values
 
+#Convert 0xCafe to integer value
+#16 is the ASCII base, represented by '0x'
+offset = int('0xCafe',16) 
 
-p -= int('0xCafe',16) # Deletes the offset
+p -=  offset # Deletes the offset 
 
 for i in p: 
      # Print the password
