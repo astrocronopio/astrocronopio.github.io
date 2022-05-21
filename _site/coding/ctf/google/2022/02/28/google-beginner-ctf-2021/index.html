@@ -243,27 +243,27 @@ And the password is GoodPassword, it takes you to a new page with the flag at th
 
 <p>Check the inspect the html code using your favorite web browser. You get the following code:</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const checkPassword = () =&gt; {
-  const v = document.getElementById("password").value;
-  const p = Array.from(v).map(a =&gt; 0xCafe + a.charCodeAt(0));
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">checkPassword</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">v</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">password</span><span class="dl">"</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">a</span> <span class="o">=&gt;</span> <span class="mh">0xCafe</span> <span class="o">+</span> <span class="nx">a</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
 
-  if(p[0] === 52037 &amp;&amp;
-     p[6] === 52081 &amp;&amp;
-     p[5] === 52063 &amp;&amp;
-     p[1] === 52077 &amp;&amp;
-     p[9] === 52077 &amp;&amp;
-     p[10] === 52080 &amp;&amp;
-     p[4] === 52046 &amp;&amp;
-     p[3] === 52066 &amp;&amp;
-     p[8] === 52085 &amp;&amp;
-     p[7] === 52081 &amp;&amp;
-     p[2] === 52077 &amp;&amp;
-     p[11] === 52066) {
-    window.location.replace(v + ".html");
-  } else {
-    alert("Wrong password!");
-  }
-}
+  <span class="k">if</span><span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52037</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52081</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52063</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52077</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52077</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52080</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52046</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52066</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52085</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52081</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52077</span> <span class="o">&amp;&amp;</span>
+     <span class="nx">p</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">===</span> <span class="mi">52066</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">v</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">.html</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Wrong password!</span><span class="dl">"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
 </code></pre></div></div>
 <p>We enter the code and the program stores it inside the <code class="language-plaintext highlighter-rouge">const v</code>, then the code transforms the characters into integer values after adding <code class="language-plaintext highlighter-rouge">0xCafe</code>. To obtain the password, we need to check what values are stored in the <code class="language-plaintext highlighter-rouge">p[i]</code>: Python is our friend.</p>
@@ -411,6 +411,19 @@ for i in p:
 
   
   
+
+  
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
     
   
   
@@ -442,57 +455,73 @@ for i in p:
 
 
   
-
-  
-
-  
-
-  
-
-
-
-
-
-
-  
-
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-
-
-
-
-  
-    
-    
-    
-
-    
     <div class="related-posts-post">
-  <a href="/music/playlist/2022/04/28/Songs/">
-    Songs I really like
+  <a href="/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard/">
+    C++ - Static Data Members & Static Functions
   </a>
 </div>
 
 
+    
   
+
+  
+    <div class="related-posts-post">
+  <a href="/coding/leetcode/2022/05/11/Kadane/">
+    Kadane's Algorithm & LeetCode 53 Maximum Subarray
+  </a>
+</div>
+
+
+    
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+
+
+
+
+  
+    
+    
+      
+    
+    
+      
     
     
       
@@ -512,16 +541,7 @@ for i in p:
     
     
     
-
-    
-    <div class="related-posts-post">
-  <a href="/gitgraduate.html">
-    Github Repos of NN and DNN classes/code
-  </a>
-</div>
-
-
-  
+      
 
 
 </div>
@@ -539,7 +559,7 @@ for i in p:
   <p>
     
     <span class="post-nav-label">Next</span><br>
-    <a href="/music/playlist/2022/04/28/Songs/">Songs I really like</a>
+    <a href="/coding/leetcode/2022/05/11/Kadane/">Kadane's Algorithm & LeetCode 53 Maximum Subarray</a>
     
   </p>
 </div>

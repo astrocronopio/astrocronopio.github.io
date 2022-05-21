@@ -21,7 +21,7 @@ Get the password for this website [https://cctv-web.2021.ctfcompetition.com/](ht
 
 Check the inspect the html code using your favorite web browser. You get the following code:
 
-```
+```javascript
 const checkPassword = () => {
   const v = document.getElementById("password").value;
   const p = Array.from(v).map(a => 0xCafe + a.charCodeAt(0));
