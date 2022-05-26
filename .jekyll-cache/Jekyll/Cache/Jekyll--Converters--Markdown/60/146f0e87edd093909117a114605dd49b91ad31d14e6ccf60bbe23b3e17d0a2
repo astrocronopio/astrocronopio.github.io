@@ -1,0 +1,4 @@
+I"8<h2 id="misc-stdstring-methods">Misc <code class="language-plaintext highlighter-rouge">std::string</code> methods</h2>
+<h3 id="istringstream-from-sstream"><code class="language-plaintext highlighter-rouge">istringstream</code> from sstream</h3>
+<p>This helps to get word from a string separated by a space.</p>
+:ET

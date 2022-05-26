@@ -1,12 +1,12 @@
 [
   
   {
-    "title"    : "C++ - std::istringstream",
+    "title"    : "C++ Notes",
     "category" : "coding, c++, cpp",
-    "url"      : "/coding/c++/cpp/2022/05/25/cpp-istringstream/",
+    "url"      : "/coding/c++/cpp/2022/05/25/cpp-notes/",
     "date"     : "May 25, 2022",
-    "excerpt"  : "\n",
-    "content"  : "\n"
+    "excerpt"  : "Misc std::string tricks\n\n  istringstream from sstream:\nThis helps to get word from a string separated by a space.\n\n",
+    "content"  : "Misc std::string tricks\n\n  istringstream from sstream:\nThis helps to get word from a string separated by a space.\n\n"
 } ,
   
   {
@@ -32,8 +32,8 @@
     "category" : "coding, SQL",
     "url"      : "/coding/sql/2022/03/20/mysql-notes/",
     "date"     : "March 20, 2022",
-    "excerpt"  : "JOIN vs. RIGHT JOIN vs. LEFT JOIN\n\n\n  (INNER) JOIN: Returns records that have matching values in both tables\n\n\n\n\n\n  \n    LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table\n  \n  \n    RIGHT (OUTE...",
-    "content"  : "JOIN vs. RIGHT JOIN vs. LEFT JOIN\n\n\n  (INNER) JOIN: Returns records that have matching values in both tables\n\n\n\n\n\n  \n    LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table\n  \n  \n    RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table\n  \n  \n    FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table\n  \n\n\nHAVING vs. WHERE\n\n"
+    "excerpt"  : "JOIN vs. RIGHT JOIN vs. LEFT JOIN\n\nExtracted from this source\n\n\n  \n    (INNER) JOIN: Returns records that have matching values in both tables\n  \n  \n    LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the ri...",
+    "content"  : "JOIN vs. RIGHT JOIN vs. LEFT JOIN\n\nExtracted from this source\n\n\n  \n    (INNER) JOIN: Returns records that have matching values in both tables\n  \n  \n    LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table\n  \n  \n    RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table\n  \n  \n    FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table\n  \n\n\n\n\nHAVING vs. WHERE\n\nSELECT column_name(s)\nFROM table_name\nWHERE condition\nGROUP BY column_name(s)\nHAVING condition\nORDER BY column_name(s);\n\n\n  WHERE: Like if after SELECT xx FROM yy\n  HAVING: Only after every GROUP BY, it’s like WHERE but for aggregate functions.\n\n\n###\n\n"
 } ,
   
   {
