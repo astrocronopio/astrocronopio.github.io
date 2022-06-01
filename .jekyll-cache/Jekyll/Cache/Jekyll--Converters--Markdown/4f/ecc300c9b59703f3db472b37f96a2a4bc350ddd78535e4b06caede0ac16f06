@@ -1,0 +1,24 @@
+I"w<h3 id="istringstream-from-sstream"><code class="language-plaintext highlighter-rouge">istringstream</code> from <code class="language-plaintext highlighter-rouge">sstream</code>:</h3>
+<p>This helps to get word from a string separated by a space.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"foo bar"</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">istringstream</span> <span class="nf">p_s</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+
+<span class="k">while</span><span class="p">(</span><span class="n">p_s</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">p_s</span> <span class="o">&gt;&gt;</span> <span class="n">word</span><span class="p">;</span> <span class="err">#</span> <span class="n">get</span> <span class="n">the</span> <span class="n">word</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variable</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">word</span><span class="o">&lt;&lt;</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="cp">## Output ##
+</span><span class="n">foo</span>
+<span class="n">bar</span>
+</code></pre></div></div>
+
+<h3 id="for_each-superpower">‘for_each’ superpower</h3>
+<p><a href="https://en.cppreference.com/w/cpp/algorithm/for_each">Cpp reference</a></p>
+
+<h3 id="lambda-expressions">Lambda Expressions</h3>
+
+<p><a href="https://en.cppreference.com/w/cpp/language/lambda">Cpp reference</a></p>
+:ET

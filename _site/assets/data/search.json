@@ -1,12 +1,21 @@
 [
   
   {
+    "title"    : "Google SRE Book - Postmortem Culture [Extract]",
+    "category" : "coding, essay",
+    "url"      : "/coding/essay/2022/05/26/postmortem-report/",
+    "date"     : "May 26, 2022",
+    "excerpt"  : "Original from this source\n\nAs SREs, we work with large-scale, complex, distributed systems. We constantly enhance our services with new features and add new systems. Incidents and outages are inevitable given our scale and velocity of change. When...",
+    "content"  : "Original from this source\n\nAs SREs, we work with large-scale, complex, distributed systems. We constantly enhance our services with new features and add new systems. Incidents and outages are inevitable given our scale and velocity of change. When an incident occurs, we fix the underlying issue, and services return to their normal operating conditions. Unless we have some formalized process of learning from these incidents in place, they may recur ad infinitum. Left unchecked, incidents can multiply in complexity or even cascade, overwhelming a system and its operators and ultimately impacting our users. Therefore, postmortems are an essential tool for SRE.\n\nA postmortem is a written record of an incident, its impact, the actions taken to mitigate or resolve it, the root cause(s), and the follow-up actions to prevent the incident from recurring. This chapter describes criteria for deciding when to conduct postmortems, some best practices around postmortems, and advice on how to cultivate a postmortem culture based on the experience we’ve gained over the years.\n\nWriting a postmortem also involves formal review and publication. In practice, teams share the first postmortem draft internally and solicit a group of senior engineers to assess the draft for completeness. Review criteria might include:\n\n\n  Was key incident data collected for posterity?\n  Are the impact assessments complete?\n  Was the root cause sufficiently deep?\n  Is the action plan appropriate and are resulting bug fixes at appropriate priority?\n  Did we share the outcome with relevant stakeholders?\n\n\nOnce the initial review is complete, the postmortem is shared more broadly, typically with the larger engineering team or on an internal mailing list. Our goal is to share postmortems to the widest possible audience that would benefit from the knowledge or lessons imparted. Google has stringent rules around access to any piece of information that might identify an end-user,80 and even internal documents like postmortems never include such information.\n"
+} ,
+  
+  {
     "title"    : "C++ Notes",
     "category" : "coding, c++, cpp",
     "url"      : "/coding/c++/cpp/2022/05/25/cpp-notes/",
     "date"     : "May 25, 2022",
-    "excerpt"  : "Misc std::string tricks\n\n  istringstream from sstream:\nThis helps to get word from a string separated by a space.\n\n",
-    "content"  : "Misc std::string tricks\n\n  istringstream from sstream:\nThis helps to get word from a string separated by a space.\n\n"
+    "excerpt"  : "istringstream from sstream:\nThis helps to get word from a string separated by a space.\n\n...\nstd::string s = &quot;foo bar&quot;;\nstd::istringstream p_s(s);\n\nwhile(p_s) {\n\tp_s &amp;gt;&amp;gt; word; # get the word to the variable\n\tstd::cout&amp;lt;&amp;lt;word&amp;lt;&amp;lt;&quot;\\n&quot;;\n...",
+    "content"  : "istringstream from sstream:\nThis helps to get word from a string separated by a space.\n\n...\nstd::string s = &quot;foo bar&quot;;\nstd::istringstream p_s(s);\n\nwhile(p_s) {\n\tp_s &amp;gt;&amp;gt; word; # get the word to the variable\n\tstd::cout&amp;lt;&amp;lt;word&amp;lt;&amp;lt;&quot;\\n&quot;;\n}\n...\n## Output ##\nfoo\nbar\n\n\n‘for_each’ superpower\nCpp reference\n\nLambda Expressions\n\nCpp reference\n"
 } ,
   
   {

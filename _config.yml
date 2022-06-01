@@ -9,7 +9,7 @@ lang: "en"
 title: evelyn@home
 
 # Short bio or description (displayed in the header)t
-description: Code & Miscellanea.
+description: Code & Miscellanea
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: /assets/image/avatar.png
@@ -36,15 +36,19 @@ navigation_links:
   - title: Projects
     url: /projects
 
-
-  - title: Resumé
+  - title: CV
     url: /media/Coronel-Resume.pdf
     
   - title: Contact
     url: /contact.html
     
+  - title: Archive
+    url: /archive
 
-  - title: 🔍
+  - title: Categories
+    url: /categories
+
+  - title: Search
     url: /search
 
 
