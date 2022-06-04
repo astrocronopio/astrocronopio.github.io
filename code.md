@@ -6,13 +6,19 @@ permalink: /code
 
 ## Interesting Websites to Check Daily
 
+### CTFs
 * [HackTheBox](https://www.hackthebox.com/)
 * [HackerOne](https://www.hackerone.com/)
 * [PicoCTF](https://picoctf.org/)
-* [Kaggle](https://www.kaggle.com/)
+
+### Code Train
 * [Codewars](https://www.codewars.com/)
 * [LeetCode](https://www.leetcode.com/)
 * [Hackerrank](https://www.hackerrank.com/)
+
+### ML
+* [Kaggle](https://www.kaggle.com/)
+
 
 ### Me & The Code
 
