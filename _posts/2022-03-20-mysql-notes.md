@@ -35,3 +35,27 @@ ORDER BY column_name(s);
 
 ### 
 
+
+### IS vs =
+
+IS is for alphanumeric values and = is for numbers
+
+test
+|name|value|
+|pepe| 11	|
+|pepa| 5 |
+|peepo| 11| 
+
+
+```
+SELECT name FROM test
+WHERE name IS "pep%"
+
+>> pepe,pepa
+
+SELECT name FROM test
+WHERE value = 11
+
+>> pepe, peepo 
+```
+

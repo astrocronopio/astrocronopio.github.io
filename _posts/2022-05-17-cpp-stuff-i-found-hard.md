@@ -1,13 +1,15 @@
 ---
 layout: post
-title: C++ - Static Data Members & Static Functions
+title: C++ - Notes
 categories: [coding, c++, cpp]
 ---
+
+## Static Function/Variables in a class
 
 Long time ago, I found a really nice example to understand it and I'm writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it. 
 
 
-## Creating a toy class
+### Creating a toy class
 
 Let's create small code where we will emulate a service with users. We want to know at any time how many users we have, how can we do that?
 
@@ -150,3 +152,35 @@ int main(){
 }
 ```
 
+
+
+
+## `istringstream` from `sstream`:
+This helps to get word from a string separated by a space.
+
+```cpp
+...
+std::string s = "foo bar";
+std::istringstream p_s(s);
+
+while(p_s) {
+	p_s >> word; # get the word to the variable
+	std::cout<<word<<"\n";
+}
+...
+## Output ##
+foo
+bar
+```
+
+## 'for_each' superpower
+[Cpp reference](https://en.cppreference.com/w/cpp/algorithm/for_each)
+
+## Lambda Expressions
+
+[Cpp reference](https://en.cppreference.com/w/cpp/language/lambda)
+
+## unordered_set vs unordered_map
+
+- Set doesn't need a value associated with the key, it's a hash table with keys only
+- map is a hashtable, key and value pair.
