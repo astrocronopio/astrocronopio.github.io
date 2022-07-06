@@ -1,0 +1,89 @@
+I"#<p>Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.</p>
+
+<h3 id="brute-force">Brute force</h3>
+
+<h5 id="input-s--leetcode">Input: s = “leetcode”</h5>
+
+<ul>
+  <li>I take a look at l, I check if does repeat I go next. In this case it doesnt so it is the solution. We only care about the first one which doesnt repeat.</li>
+</ul>
+
+<h5 id="input-s--aaccaddleetcode">Input: s = “aaccaddleetcode”</h5>
+
+<ul>
+  <li>
+    <p>I take a look at a, I check if does repeat I go next. In this case it repeat thefore I skip. Next value is also a, as before, so we should delete all the instances of a to be sure.</p>
+  </li>
+  <li>Now the input is s = “ccddleetcode”, we repeat the previous step</li>
+  <li>Now the input is s = “ddleetcode”, we repeat the previous step</li>
+  <li>Now the input is s = “leetcode”, we repeat the previous step</li>
+  <li>Now L doesnt repeat so it is the solution, its position in the original input was 4.</li>
+</ul>
+
+<p>This is a $O(n^2)$</p>
+
+<h3 id="bottlenecks">Bottlenecks</h3>
+
+<p>Searching the repeated values makes the solution slow. Ideally we could make something like this</p>
+
+<p>x = (frecuency, first index)	
+“a = (3,0)
+ c = (3,2)
+ d = (3,5)
+ l = (1,6) - exit
+ e
+ t
+ o
+ d
+ “</p>
+
+<p>Maybe I could a map with frequencies going once through the array, then I go again check the letters and its frequecy. This would be O(n)!</p>
+
+<p>hash map of input - O(n)
+“a = 3
+ c = 3
+ d = 3
+ l = 1 
+ e = 3
+ t = 1
+ o = 1”</p>
+
+<p>check the array again - O(n)</p>
+
+<p>a - 3, skip,
+a skip
+c skip
+…
+l return index</p>
+
+<h3 id="code">Code</h3>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">firstUniqChar</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">hs</span><span class="p">{};</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">i</span><span class="o">:</span><span class="n">s</span><span class="p">)</span> <span class="n">hs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">++</span><span class="p">;</span> <span class="c1">// O(n)</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">hs</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span> <span class="c1">//n x O(1)</span>
+    
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>I need to go through the array at least   once to check if the first values repeats or not. The best possible runtime is a O(n) order</p>
+
+<h2 id="code-20-without-maps">Code 2.0 without maps</h2>
+
+<p>We fix an array with every letter, in theory the lookup time is faster in this case than a map.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">firstUniqChar</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span> <span class="n">hs</span><span class="p">(</span><span class="mi">26</span><span class="p">);</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">i</span><span class="o">:</span><span class="n">s</span><span class="p">)</span> <span class="n">hs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">++</span><span class="p">;</span> <span class="c1">// O(n)</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span> <span class="c1">//n x O(1) - here is faster</span>
+    
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

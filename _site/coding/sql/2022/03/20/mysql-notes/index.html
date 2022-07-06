@@ -44,6 +44,28 @@ ORDER BY column_name(s);
 
 ###
 
+IS vs =
+
+IS is for alphanumeric values and = is for numbers
+
+test
+|name|value|
+|pepe| 11	|
+|pepa| 5 |
+|peepo| 11| 
+
+
+SELECT name FROM test
+WHERE name IS "pep%"
+
+&gt;&gt; pepe,pepa
+
+SELECT name FROM test
+WHERE value = 11
+
+&gt;&gt; pepe, peepo 
+
+
 " />
 <meta property="og:description" content="JOIN vs. RIGHT JOIN vs. LEFT JOIN
 
@@ -81,6 +103,28 @@ ORDER BY column_name(s);
 
 
 ###
+
+IS vs =
+
+IS is for alphanumeric values and = is for numbers
+
+test
+|name|value|
+|pepe| 11	|
+|pepa| 5 |
+|peepo| 11| 
+
+
+SELECT name FROM test
+WHERE name IS "pep%"
+
+&gt;&gt; pepe,pepa
+
+SELECT name FROM test
+WHERE value = 11
+
+&gt;&gt; pepe, peepo 
+
 
 " />
 
@@ -145,7 +189,7 @@ ORDER BY column_name(s);
 
   <a class="nav-menu-item" href="/archive">Archive</a>
 
-  <a class="nav-menu-item" href="/categories">Categories</a>
+  <a class="nav-menu-item" href="/categories">Tags</a>
 
   <a class="nav-menu-item" href="/search">Search</a>
 
@@ -197,6 +241,28 @@ ORDER BY column_name(s);
 </ul>
 
 <p>###</p>
+
+<h3 id="is-vs-">IS vs =</h3>
+
+<p>IS is for alphanumeric values and = is for numbers</p>
+
+<p>test</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|name|value|
+|pepe| 11	|
+|pepa| 5 |
+|peepo| 11| 
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT name FROM test
+WHERE name IS "pep%"
+
+&gt;&gt; pepe,pepa
+
+SELECT name FROM test
+WHERE value = 11
+
+&gt;&gt; pepe, peepo 
+</code></pre></div></div>
 
 
   </div>
@@ -343,6 +409,19 @@ ORDER BY column_name(s);
 
   
   
+
+  
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
     
   
   
@@ -385,6 +464,19 @@ ORDER BY column_name(s);
 
 
 
+
+  
+
+  
+    <div class="related-posts-post">
+  <a href="/coding/ml/2022/06/01/HF-notes/">
+    Hugging Face Course Notes
+  </a>
+</div>
+
+
+    
+  
 
   
     <div class="related-posts-post">
@@ -399,19 +491,8 @@ ORDER BY column_name(s);
 
   
     <div class="related-posts-post">
-  <a href="/coding/c++/cpp/2022/05/25/cpp-notes/">
-    C++ Notes
-  </a>
-</div>
-
-
-    
-  
-
-  
-    <div class="related-posts-post">
   <a href="/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard/">
-    C++ - Static Data Members & Static Functions
+    C++ - Notes
   </a>
 </div>
 

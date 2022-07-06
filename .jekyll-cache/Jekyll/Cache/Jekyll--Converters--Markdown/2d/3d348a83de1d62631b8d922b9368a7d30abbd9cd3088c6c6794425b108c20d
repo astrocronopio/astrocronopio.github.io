@@ -1,4 +1,5 @@
-I"ì<h3 id="join-vs-right-join-vs-left-join">JOIN vs. RIGHT JOIN vs. LEFT JOIN</h3>
+I"
+<h3 id="join-vs-right-join-vs-left-join">JOIN vs. RIGHT JOIN vs. LEFT JOIN</h3>
 
 <p>Extracted from <a href="https://www.w3schools.com/sql/sql_join.asp">this source</a></p>
 
@@ -34,5 +35,27 @@
 </ul>
 
 <p>###</p>
+
+<h3 id="is-vs-">IS vs =</h3>
+
+<p>IS is for alphanumeric values and = is for numbers</p>
+
+<p>test</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|name|value|
+|pepe| 11	|
+|pepa| 5 |
+|peepo| 11| 
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT name FROM test
+WHERE name IS "pep%"
+
+&gt;&gt; pepe,pepa
+
+SELECT name FROM test
+WHERE value = 11
+
+&gt;&gt; pepe, peepo 
+</code></pre></div></div>
 
 :ET

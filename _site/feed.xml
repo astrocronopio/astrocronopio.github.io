@@ -1,4 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-06-01T13:16:17-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">evelyn@home</title><subtitle>Code &amp; Miscellanea</subtitle><entry><title type="html">Google SRE Book - Postmortem Culture [Extract]</title><link href="http://localhost:4000/coding/essay/2022/05/26/postmortem-report/" rel="alternate" type="text/html" title="Google SRE Book - Postmortem Culture [Extract]" /><published>2022-05-26T00:00:00-04:00</published><updated>2022-05-26T00:00:00-04:00</updated><id>http://localhost:4000/coding/essay/2022/05/26/postmortem-report</id><content type="html" xml:base="http://localhost:4000/coding/essay/2022/05/26/postmortem-report/"><![CDATA[<p>Original from <a href="https://sre.google/sre-book/postmortem-culture/">this source</a></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2022-06-23T10:18:44-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">evelyn@home</title><subtitle>Code &amp; Miscellanea</subtitle><entry><title type="html">(c++) 387 - First Unique Character in a String</title><link href="http://localhost:4000/leetcode/cpp/2022/06/11/387-easy-cpp-hstbl/" rel="alternate" type="text/html" title="(c++) 387 - First Unique Character in a String" /><published>2022-06-11T00:00:00-04:00</published><updated>2022-06-11T00:00:00-04:00</updated><id>http://localhost:4000/leetcode/cpp/2022/06/11/387-easy-cpp-hstbl</id><content type="html" xml:base="http://localhost:4000/leetcode/cpp/2022/06/11/387-easy-cpp-hstbl/"><![CDATA[<p>Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.</p>
+
+<h3 id="brute-force">Brute force</h3>
+
+<h5 id="input-s--leetcode">Input: s = “leetcode”</h5>
+
+<ul>
+  <li>I take a look at l, I check if does repeat I go next. In this case it doesnt so it is the solution. We only care about the first one which doesnt repeat.</li>
+</ul>
+
+<h5 id="input-s--aaccaddleetcode">Input: s = “aaccaddleetcode”</h5>
+
+<ul>
+  <li>
+    <p>I take a look at a, I check if does repeat I go next. In this case it repeat thefore I skip. Next value is also a, as before, so we should delete all the instances of a to be sure.</p>
+  </li>
+  <li>Now the input is s = “ccddleetcode”, we repeat the previous step</li>
+  <li>Now the input is s = “ddleetcode”, we repeat the previous step</li>
+  <li>Now the input is s = “leetcode”, we repeat the previous step</li>
+  <li>Now L doesnt repeat so it is the solution, its position in the original input was 4.</li>
+</ul>
+
+<p>This is a $O(n^2)$</p>
+
+<h3 id="bottlenecks">Bottlenecks</h3>
+
+<p>Searching the repeated values makes the solution slow. Ideally we could make something like this</p>
+
+<p>x = (frecuency, first index)	
+“a = (3,0)
+ c = (3,2)
+ d = (3,5)
+ l = (1,6) - exit
+ e
+ t
+ o
+ d
+ “</p>
+
+<p>Maybe I could a map with frequencies going once through the array, then I go again check the letters and its frequecy. This would be O(n)!</p>
+
+<p>hash map of input - O(n)
+“a = 3
+ c = 3
+ d = 3
+ l = 1 
+ e = 3
+ t = 1
+ o = 1”</p>
+
+<p>check the array again - O(n)</p>
+
+<p>a - 3, skip,
+a skip
+c skip
+…
+l return index</p>
+
+<h3 id="code">Code</h3>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">firstUniqChar</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">hs</span><span class="p">{};</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">i</span><span class="o">:</span><span class="n">s</span><span class="p">)</span> <span class="n">hs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">++</span><span class="p">;</span> <span class="c1">// O(n)</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">hs</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span> <span class="c1">//n x O(1)</span>
+    
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>I need to go through the array at least   once to check if the first values repeats or not. The best possible runtime is a O(n) order</p>
+
+<h2 id="code-20-without-maps">Code 2.0 without maps</h2>
+
+<p>We fix an array with every letter, in theory the lookup time is faster in this case than a map.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">firstUniqChar</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span> <span class="n">hs</span><span class="p">(</span><span class="mi">26</span><span class="p">);</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="n">i</span><span class="o">:</span><span class="n">s</span><span class="p">)</span> <span class="n">hs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">++</span><span class="p">;</span> <span class="c1">// O(n)</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">hs</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">i</span><span class="p">;</span> <span class="c1">//n x O(1) - here is faster</span>
+    
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>]]></content><author><name></name></author><category term="Leetcode" /><category term="cpp" /><summary type="html"><![CDATA[Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1. Brute force Input: s = “leetcode” I take a look at l, I check if does repeat I go next. In this case it doesnt so it is the solution. We only care about the first one which doesnt repeat. Input: s = “aaccaddleetcode” I take a look at a, I check if does repeat I go next. In this case it repeat thefore I skip. Next value is also a, as before, so we should delete all the instances of a to be sure. Now the input is s = “ccddleetcode”, we repeat the previous step Now the input is s = “ddleetcode”, we repeat the previous step Now the input is s = “leetcode”, we repeat the previous step Now L doesnt repeat so it is the solution, its position in the original input was 4. This is a $O(n^2)$ Bottlenecks Searching the repeated values makes the solution slow. Ideally we could make something like this x = (frecuency, first index) “a = (3,0) c = (3,2) d = (3,5) l = (1,6) - exit e t o d “ Maybe I could a map with frequencies going once through the array, then I go again check the letters and its frequecy. This would be O(n)! hash map of input - O(n) “a = 3 c = 3 d = 3 l = 1 e = 3 t = 1 o = 1” check the array again - O(n) a - 3, skip, a skip c skip … l return index Code int firstUniqChar(string s) { unordered_map&lt;char,int&gt; hs{}; for(const auto &amp;i:s) hs[i]++; // O(n) for(int i=0; i &lt; s.size(); i++) if(hs.at(s[i])==1) return i; //n x O(1) return -1; } I need to go through the array at least once to check if the first values repeats or not. The best possible runtime is a O(n) order Code 2.0 without maps We fix an array with every letter, in theory the lookup time is faster in this case than a map. int firstUniqChar(string s) { std::vector&lt;int&gt; v; hs(26); for(const auto &amp;i:s) hs[i]++; // O(n) for(int i=0; i &lt; s.size(); i++) if(hs[s[i]]==1) return i; //n x O(1) - here is faster return -1; }]]></summary></entry><entry><title type="html">Hugging Face Course Notes</title><link href="http://localhost:4000/coding/ml/2022/06/01/HF-notes/" rel="alternate" type="text/html" title="Hugging Face Course Notes" /><published>2022-06-01T00:00:00-04:00</published><updated>2022-06-01T00:00:00-04:00</updated><id>http://localhost:4000/coding/ml/2022/06/01/HF-notes</id><content type="html" xml:base="http://localhost:4000/coding/ml/2022/06/01/HF-notes/"><![CDATA[<h2 id="chapter-2---using-hf-transformers">Chapter 2 - Using HF Transformers</h2>
+
+<h3 id="about-the-inputoutput-values-of-the-hf-transformers">About the input/output values of the HF Transformers</h3>
+<p>You can use 🤗 Transformers without having to worry about which ML framework is used as a backend; it might be PyTorch or TensorFlow, or Flax for some models. However, <em>Transformer models only accept tensors as input</em>.</p>
+
+<p>To specify the type of tensors we want to get back (PyTorch, TensorFlow, or plain NumPy), we use the <code class="language-plaintext highlighter-rouge">return_tensors</code> argument: ‘pt’, ‘tf’ &amp; ‘np’? Default is a python list.</p>
+
+<h3 id="about-tf-and-the-heads">About TF and the heads</h3>
+
+<p>A model can be used for different purposes, it learns a set of hidden parameters/states then a ‘head’ changes these values to the task we want to do. The hidden states are a final representation of the input, then this is transformed into the actual output.</p>
+
+<p>Embeddings into the tokenized input <br />
+‘AutoModel’ is the model without a head
+‘AutoTokenizer’ is the Embeddings layers?
+‘AutoModelForSequenceClassification’ is a head for classification</p>
+
+<p>###</p>]]></content><author><name></name></author><category term="coding" /><category term="ML" /><summary type="html"><![CDATA[Chapter 2 - Using HF Transformers About the input/output values of the HF Transformers You can use 🤗 Transformers without having to worry about which ML framework is used as a backend; it might be PyTorch or TensorFlow, or Flax for some models. However, Transformer models only accept tensors as input. To specify the type of tensors we want to get back (PyTorch, TensorFlow, or plain NumPy), we use the return_tensors argument: ‘pt’, ‘tf’ &amp; ‘np’? Default is a python list. About TF and the heads A model can be used for different purposes, it learns a set of hidden parameters/states then a ‘head’ changes these values to the task we want to do. The hidden states are a final representation of the input, then this is transformed into the actual output. Embeddings into the tokenized input ‘AutoModel’ is the model without a head ‘AutoTokenizer’ is the Embeddings layers? ‘AutoModelForSequenceClassification’ is a head for classification ###]]></summary></entry><entry><title type="html">Google SRE Book - Postmortem Culture [Extract]</title><link href="http://localhost:4000/coding/essay/2022/05/26/postmortem-report/" rel="alternate" type="text/html" title="Google SRE Book - Postmortem Culture [Extract]" /><published>2022-05-26T00:00:00-04:00</published><updated>2022-05-26T00:00:00-04:00</updated><id>http://localhost:4000/coding/essay/2022/05/26/postmortem-report</id><content type="html" xml:base="http://localhost:4000/coding/essay/2022/05/26/postmortem-report/"><![CDATA[<p>Original from <a href="https://sre.google/sre-book/postmortem-culture/">this source</a></p>
 
 <p>As SREs, we work with large-scale, complex, distributed systems. We constantly enhance our services with new features and add new systems. Incidents and outages are inevitable given our scale and velocity of change. When an incident occurs, we fix the underlying issue, and services return to their normal operating conditions. Unless we have some formalized process of learning from these incidents in place, they may recur ad infinitum. Left unchecked, incidents can multiply in complexity or even cascade, overwhelming a system and its operators and ultimately impacting our users. Therefore, postmortems are an essential tool for SRE.</p>
 
@@ -14,31 +117,11 @@
   <li>Did we share the outcome with relevant stakeholders?</li>
 </ul>
 
-<p>Once the initial review is complete, the postmortem is shared more broadly, typically with the larger engineering team or on an internal mailing list. Our goal is to share postmortems to the widest possible audience that would benefit from the knowledge or lessons imparted. Google has stringent rules around access to any piece of information that might identify an end-user,80 and even internal documents like postmortems never include such information.</p>]]></content><author><name></name></author><category term="coding" /><category term="essay" /><summary type="html"><![CDATA[Original from this source As SREs, we work with large-scale, complex, distributed systems. We constantly enhance our services with new features and add new systems. Incidents and outages are inevitable given our scale and velocity of change. When an incident occurs, we fix the underlying issue, and services return to their normal operating conditions. Unless we have some formalized process of learning from these incidents in place, they may recur ad infinitum. Left unchecked, incidents can multiply in complexity or even cascade, overwhelming a system and its operators and ultimately impacting our users. Therefore, postmortems are an essential tool for SRE. A postmortem is a written record of an incident, its impact, the actions taken to mitigate or resolve it, the root cause(s), and the follow-up actions to prevent the incident from recurring. This chapter describes criteria for deciding when to conduct postmortems, some best practices around postmortems, and advice on how to cultivate a postmortem culture based on the experience we’ve gained over the years. Writing a postmortem also involves formal review and publication. In practice, teams share the first postmortem draft internally and solicit a group of senior engineers to assess the draft for completeness. Review criteria might include: Was key incident data collected for posterity? Are the impact assessments complete? Was the root cause sufficiently deep? Is the action plan appropriate and are resulting bug fixes at appropriate priority? Did we share the outcome with relevant stakeholders? Once the initial review is complete, the postmortem is shared more broadly, typically with the larger engineering team or on an internal mailing list. Our goal is to share postmortems to the widest possible audience that would benefit from the knowledge or lessons imparted. Google has stringent rules around access to any piece of information that might identify an end-user,80 and even internal documents like postmortems never include such information.]]></summary></entry><entry><title type="html">C++ Notes</title><link href="http://localhost:4000/coding/c++/cpp/2022/05/25/cpp-notes/" rel="alternate" type="text/html" title="C++ Notes" /><published>2022-05-25T00:00:00-04:00</published><updated>2022-05-25T00:00:00-04:00</updated><id>http://localhost:4000/coding/c++/cpp/2022/05/25/cpp-notes</id><content type="html" xml:base="http://localhost:4000/coding/c++/cpp/2022/05/25/cpp-notes/"><![CDATA[<h3 id="istringstream-from-sstream"><code class="language-plaintext highlighter-rouge">istringstream</code> from <code class="language-plaintext highlighter-rouge">sstream</code>:</h3>
-<p>This helps to get word from a string separated by a space.</p>
+<p>Once the initial review is complete, the postmortem is shared more broadly, typically with the larger engineering team or on an internal mailing list. Our goal is to share postmortems to the widest possible audience that would benefit from the knowledge or lessons imparted. Google has stringent rules around access to any piece of information that might identify an end-user,80 and even internal documents like postmortems never include such information.</p>]]></content><author><name></name></author><category term="coding" /><category term="essay" /><summary type="html"><![CDATA[Original from this source As SREs, we work with large-scale, complex, distributed systems. We constantly enhance our services with new features and add new systems. Incidents and outages are inevitable given our scale and velocity of change. When an incident occurs, we fix the underlying issue, and services return to their normal operating conditions. Unless we have some formalized process of learning from these incidents in place, they may recur ad infinitum. Left unchecked, incidents can multiply in complexity or even cascade, overwhelming a system and its operators and ultimately impacting our users. Therefore, postmortems are an essential tool for SRE. A postmortem is a written record of an incident, its impact, the actions taken to mitigate or resolve it, the root cause(s), and the follow-up actions to prevent the incident from recurring. This chapter describes criteria for deciding when to conduct postmortems, some best practices around postmortems, and advice on how to cultivate a postmortem culture based on the experience we’ve gained over the years. Writing a postmortem also involves formal review and publication. In practice, teams share the first postmortem draft internally and solicit a group of senior engineers to assess the draft for completeness. Review criteria might include: Was key incident data collected for posterity? Are the impact assessments complete? Was the root cause sufficiently deep? Is the action plan appropriate and are resulting bug fixes at appropriate priority? Did we share the outcome with relevant stakeholders? Once the initial review is complete, the postmortem is shared more broadly, typically with the larger engineering team or on an internal mailing list. Our goal is to share postmortems to the widest possible audience that would benefit from the knowledge or lessons imparted. Google has stringent rules around access to any piece of information that might identify an end-user,80 and even internal documents like postmortems never include such information.]]></summary></entry><entry><title type="html">C++ - Notes</title><link href="http://localhost:4000/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard/" rel="alternate" type="text/html" title="C++ - Notes" /><published>2022-05-17T00:00:00-04:00</published><updated>2022-05-17T00:00:00-04:00</updated><id>http://localhost:4000/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard</id><content type="html" xml:base="http://localhost:4000/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard/"><![CDATA[<h2 id="static-functionvariables-in-a-class">Static Function/Variables in a class</h2>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
-<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"foo bar"</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">istringstream</span> <span class="nf">p_s</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<p>Long time ago, I found a really nice example to understand it and I’m writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it.</p>
 
-<span class="k">while</span><span class="p">(</span><span class="n">p_s</span><span class="p">)</span> <span class="p">{</span>
-	<span class="n">p_s</span> <span class="o">&gt;&gt;</span> <span class="n">word</span><span class="p">;</span> <span class="err">#</span> <span class="n">get</span> <span class="n">the</span> <span class="n">word</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variable</span>
-	<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">word</span><span class="o">&lt;&lt;</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="p">...</span>
-<span class="cp">## Output ##
-</span><span class="n">foo</span>
-<span class="n">bar</span>
-</code></pre></div></div>
-
-<h3 id="for_each-superpower">‘for_each’ superpower</h3>
-<p><a href="https://en.cppreference.com/w/cpp/algorithm/for_each">Cpp reference</a></p>
-
-<h3 id="lambda-expressions">Lambda Expressions</h3>
-
-<p><a href="https://en.cppreference.com/w/cpp/language/lambda">Cpp reference</a></p>]]></content><author><name></name></author><category term="coding" /><category term="c++" /><category term="cpp" /><summary type="html"><![CDATA[istringstream from sstream: This helps to get word from a string separated by a space. ... std::string s = "foo bar"; std::istringstream p_s(s); while(p_s) { p_s &gt;&gt; word; # get the word to the variable std::cout&lt;&lt;word&lt;&lt;"\n"; } ... ## Output ## foo bar ‘for_each’ superpower Cpp reference Lambda Expressions Cpp reference]]></summary></entry><entry><title type="html">C++ - Static Data Members &amp;amp; Static Functions</title><link href="http://localhost:4000/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard/" rel="alternate" type="text/html" title="C++ - Static Data Members &amp;amp; Static Functions" /><published>2022-05-17T00:00:00-04:00</published><updated>2022-05-17T00:00:00-04:00</updated><id>http://localhost:4000/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard</id><content type="html" xml:base="http://localhost:4000/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard/"><![CDATA[<p>Long time ago, I found a really nice example to understand it and I’m writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it.</p>
-
-<h2 id="creating-a-toy-class">Creating a toy class</h2>
+<h3 id="creating-a-toy-class">Creating a toy class</h3>
 
 <p>Let’s create small code where we will emulate a service with users. We want to know at any time how many users we have, how can we do that?</p>
 
@@ -169,7 +252,38 @@
 
 	<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">User</span><span class="o">::</span><span class="n">get_user_count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>	
 <span class="p">}</span>
-</code></pre></div></div>]]></content><author><name></name></author><category term="coding" /><category term="c++" /><category term="cpp" /><summary type="html"><![CDATA[Long time ago, I found a really nice example to understand it and I’m writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it. Creating a toy class Let’s create small code where we will emulate a service with users. We want to know at any time how many users we have, how can we do that? Code for the user class: class User{ public: std::string name; User(){ // Constr }; ~User(){ //Destr }; }; Counting the users in the main function: int main(){ int user_counter = 2 ; User user1, user2; user2.~User(); user_counter--; } This is not a good solution, I would have to count every time I create/delete a new user by hand. Wouldn’t it be nice to make c++ count for us? This is why we want to use a single variable inside the class to count: This is a static variable. Creating the user class with a static counter class User{ static int user_counter; public: std::string name; User(){ // Constr user_counter++; }; ~User(){ //Destr user_counter--; }; }; Now, the user_counter value goes up/down when the constructor/destructor is called. int main(){ User user1, user2; //user_counter = 2 user2.~User(); //user_counter = 1 } How do we access this static counter?: Static Functions “Normal” functions can’t access static variables, and it makes sense since these variables are global to every instance of the class, i.e. the number of users can’t be accessed easily as it’s shared by everyone. class User{ static int user_counter; public: std::string name; static int get_user_count() {return user_counter;} User(){ // Constr user_counter++; }; ~User(){ //Destr user_counter--; }; }; Great, but how do i initiate the user_counter variable? It’s a shared variable, so we can’t simply write static int user_counter = 0 inside the user class, so need to initiate outside of it! //Below the User class int User::user_counter = 0; int main(){ std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; User user1, user2; //user_counter = 2 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; user2.~User(); //user_counter = 1 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; } Output: 0 2 1 The full working code: #include &lt;iostream&gt; class User{ static int user_counter; public: std::string name; static int get_user_count() {return user_counter;} User(){ // Constr user_counter++; }; ~User(){ //Destr user_counter--; }; }; int User::user_counter = 0; int main(){ std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; User user1, user2; //user_counter = 2 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; user2.~User(); //user_counter = 1 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; }]]></summary></entry><entry><title type="html">Kadane’s Algorithm &amp;amp; LeetCode 53 Maximum Subarray</title><link href="http://localhost:4000/coding/leetcode/2022/05/11/Kadane/" rel="alternate" type="text/html" title="Kadane’s Algorithm &amp;amp; LeetCode 53 Maximum Subarray" /><published>2022-05-11T00:00:00-04:00</published><updated>2022-05-11T00:00:00-04:00</updated><id>http://localhost:4000/coding/leetcode/2022/05/11/Kadane</id><content type="html" xml:base="http://localhost:4000/coding/leetcode/2022/05/11/Kadane/"><![CDATA[<p>Kadane’s Algorithm is used to obtain the maximum subarray sum, as seen in the <a href="https://leetcode.com/problems/maximum-subarray/">Leetcode 53. Maximum Subarray</a>:</p>
+</code></pre></div></div>
+
+<h2 id="istringstream-from-sstream"><code class="language-plaintext highlighter-rouge">istringstream</code> from <code class="language-plaintext highlighter-rouge">sstream</code>:</h2>
+<p>This helps to get word from a string separated by a space.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"foo bar"</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">istringstream</span> <span class="nf">p_s</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+
+<span class="k">while</span><span class="p">(</span><span class="n">p_s</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">p_s</span> <span class="o">&gt;&gt;</span> <span class="n">word</span><span class="p">;</span> <span class="err">#</span> <span class="n">get</span> <span class="n">the</span> <span class="n">word</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variable</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">word</span><span class="o">&lt;&lt;</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="cp">## Output ##
+</span><span class="n">foo</span>
+<span class="n">bar</span>
+</code></pre></div></div>
+
+<h2 id="for_each-superpower">‘for_each’ superpower</h2>
+<p><a href="https://en.cppreference.com/w/cpp/algorithm/for_each">Cpp reference</a></p>
+
+<h2 id="lambda-expressions">Lambda Expressions</h2>
+
+<p><a href="https://en.cppreference.com/w/cpp/language/lambda">Cpp reference</a></p>
+
+<h2 id="unordered_set-vs-unordered_map">unordered_set vs unordered_map</h2>
+
+<ul>
+  <li>Set doesn’t need a value associated with the key, it’s a hash table with keys only</li>
+  <li>map is a hashtable, key and value pair.</li>
+</ul>]]></content><author><name></name></author><category term="coding" /><category term="c++" /><category term="cpp" /><summary type="html"><![CDATA[Static Function/Variables in a class Long time ago, I found a really nice example to understand it and I’m writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it. Creating a toy class Let’s create small code where we will emulate a service with users. We want to know at any time how many users we have, how can we do that? Code for the user class: class User{ public: std::string name; User(){ // Constr }; ~User(){ //Destr }; }; Counting the users in the main function: int main(){ int user_counter = 2 ; User user1, user2; user2.~User(); user_counter--; } This is not a good solution, I would have to count every time I create/delete a new user by hand. Wouldn’t it be nice to make c++ count for us? This is why we want to use a single variable inside the class to count: This is a static variable. Creating the user class with a static counter class User{ static int user_counter; public: std::string name; User(){ // Constr user_counter++; }; ~User(){ //Destr user_counter--; }; }; Now, the user_counter value goes up/down when the constructor/destructor is called. int main(){ User user1, user2; //user_counter = 2 user2.~User(); //user_counter = 1 } How do we access this static counter?: Static Functions “Normal” functions can’t access static variables, and it makes sense since these variables are global to every instance of the class, i.e. the number of users can’t be accessed easily as it’s shared by everyone. class User{ static int user_counter; public: std::string name; static int get_user_count() {return user_counter;} User(){ // Constr user_counter++; }; ~User(){ //Destr user_counter--; }; }; Great, but how do i initiate the user_counter variable? It’s a shared variable, so we can’t simply write static int user_counter = 0 inside the user class, so need to initiate outside of it! //Below the User class int User::user_counter = 0; int main(){ std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; User user1, user2; //user_counter = 2 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; user2.~User(); //user_counter = 1 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; } Output: 0 2 1 The full working code: #include &lt;iostream&gt; class User{ static int user_counter; public: std::string name; static int get_user_count() {return user_counter;} User(){ // Constr user_counter++; }; ~User(){ //Destr user_counter--; }; }; int User::user_counter = 0; int main(){ std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; User user1, user2; //user_counter = 2 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; user2.~User(); //user_counter = 1 std::cout &lt;&lt; User::get_user_count() &lt;&lt; "\n"; } istringstream from sstream: This helps to get word from a string separated by a space. ... std::string s = "foo bar"; std::istringstream p_s(s); while(p_s) { p_s &gt;&gt; word; # get the word to the variable std::cout&lt;&lt;word&lt;&lt;"\n"; } ... ## Output ## foo bar ‘for_each’ superpower Cpp reference Lambda Expressions Cpp reference unordered_set vs unordered_map Set doesn’t need a value associated with the key, it’s a hash table with keys only map is a hashtable, key and value pair.]]></summary></entry><entry><title type="html">Kadane’s Algorithm &amp;amp; LeetCode 53 Maximum Subarray</title><link href="http://localhost:4000/coding/leetcode/2022/05/11/Kadane/" rel="alternate" type="text/html" title="Kadane’s Algorithm &amp;amp; LeetCode 53 Maximum Subarray" /><published>2022-05-11T00:00:00-04:00</published><updated>2022-05-11T00:00:00-04:00</updated><id>http://localhost:4000/coding/leetcode/2022/05/11/Kadane</id><content type="html" xml:base="http://localhost:4000/coding/leetcode/2022/05/11/Kadane/"><![CDATA[<p>Kadane’s Algorithm is used to obtain the maximum subarray sum, as seen in the <a href="https://leetcode.com/problems/maximum-subarray/">Leetcode 53. Maximum Subarray</a>:</p>
 
 <blockquote>
   <p>Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.<br />
@@ -288,7 +402,29 @@ Fix the fourth value: 4
   <li><code class="language-plaintext highlighter-rouge">HAVING</code>: Only after every <code class="language-plaintext highlighter-rouge">GROUP BY</code>, it’s like <code class="language-plaintext highlighter-rouge">WHERE</code> but for aggregate functions.</li>
 </ul>
 
-<p>###</p>]]></content><author><name></name></author><category term="coding" /><category term="SQL" /><summary type="html"><![CDATA[JOIN vs. RIGHT JOIN vs. LEFT JOIN Extracted from this source (INNER) JOIN: Returns records that have matching values in both tables LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table HAVING vs. WHERE SELECT column_name(s) FROM table_name WHERE condition GROUP BY column_name(s) HAVING condition ORDER BY column_name(s); WHERE: Like if after SELECT xx FROM yy HAVING: Only after every GROUP BY, it’s like WHERE but for aggregate functions. ###]]></summary></entry><entry><title type="html">Task 1 - Google CTF Beginners Quest 2021</title><link href="http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/" rel="alternate" type="text/html" title="Task 1 - Google CTF Beginners Quest 2021" /><published>2022-02-28T00:00:00-03:00</published><updated>2022-02-28T00:00:00-03:00</updated><id>http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021</id><content type="html" xml:base="http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/"><![CDATA[<p>CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: <code class="language-plaintext highlighter-rouge">CTF{This_is_how_flags_usually_look_like}</code>.</p>
+<p>###</p>
+
+<h3 id="is-vs-">IS vs =</h3>
+
+<p>IS is for alphanumeric values and = is for numbers</p>
+
+<p>test</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|name|value|
+|pepe| 11	|
+|pepa| 5 |
+|peepo| 11| 
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT name FROM test
+WHERE name IS "pep%"
+
+&gt;&gt; pepe,pepa
+
+SELECT name FROM test
+WHERE value = 11
+
+&gt;&gt; pepe, peepo 
+</code></pre></div></div>]]></content><author><name></name></author><category term="coding" /><category term="SQL" /><summary type="html"><![CDATA[JOIN vs. RIGHT JOIN vs. LEFT JOIN Extracted from this source (INNER) JOIN: Returns records that have matching values in both tables LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table HAVING vs. WHERE SELECT column_name(s) FROM table_name WHERE condition GROUP BY column_name(s) HAVING condition ORDER BY column_name(s); WHERE: Like if after SELECT xx FROM yy HAVING: Only after every GROUP BY, it’s like WHERE but for aggregate functions. ### IS vs = IS is for alphanumeric values and = is for numbers test |name|value| |pepe| 11 | |pepa| 5 | |peepo| 11| SELECT name FROM test WHERE name IS "pep%" &gt;&gt; pepe,pepa SELECT name FROM test WHERE value = 11 &gt;&gt; pepe, peepo]]></summary></entry><entry><title type="html">Task 1 - Google CTF Beginners Quest 2021</title><link href="http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/" rel="alternate" type="text/html" title="Task 1 - Google CTF Beginners Quest 2021" /><published>2022-02-28T00:00:00-03:00</published><updated>2022-02-28T00:00:00-03:00</updated><id>http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021</id><content type="html" xml:base="http://localhost:4000/coding/ctf/google/2022/02/28/google-beginner-ctf-2021/"><![CDATA[<p>CTF (Catch the Flag) in the programming world is a competition where you hack/solve puzzles in order to get a code to get the next puzzle. You might to use several tricks and a plenty of imagination to get something like this: <code class="language-plaintext highlighter-rouge">CTF{This_is_how_flags_usually_look_like}</code>.</p>
 
 <p>A really nice introduction to what CTF competition is  <a href="https://www.youtube.com/watch?v=BFMmSJ3PRZM">LiveOverflow YouTube Channel</a> with their pros and cons. I took the Google CTF Beginners Quest 2021,  I have learned some interesting stuff so I wanted to make a post detailing some of them.</p>
 

@@ -1,6 +1,8 @@
-I"T+<p>Long time ago, I found a really nice example to understand it and I’m writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it.</p>
+I"4<h2 id="static-functionvariables-in-a-class">Static Function/Variables in a class</h2>
 
-<h2 id="creating-a-toy-class">Creating a toy class</h2>
+<p>Long time ago, I found a really nice example to understand it and I’m writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it.</p>
+
+<h3 id="creating-a-toy-class">Creating a toy class</h3>
 
 <p>Let’s create small code where we will emulate a service with users. We want to know at any time how many users we have, how can we do that?</p>
 
@@ -133,4 +135,34 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
+<h2 id="istringstream-from-sstream"><code class="language-plaintext highlighter-rouge">istringstream</code> from <code class="language-plaintext highlighter-rouge">sstream</code>:</h2>
+<p>This helps to get word from a string separated by a space.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"foo bar"</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">istringstream</span> <span class="nf">p_s</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+
+<span class="k">while</span><span class="p">(</span><span class="n">p_s</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">p_s</span> <span class="o">&gt;&gt;</span> <span class="n">word</span><span class="p">;</span> <span class="err">#</span> <span class="n">get</span> <span class="n">the</span> <span class="n">word</span> <span class="n">to</span> <span class="n">the</span> <span class="n">variable</span>
+	<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">word</span><span class="o">&lt;&lt;</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">...</span>
+<span class="cp">## Output ##
+</span><span class="n">foo</span>
+<span class="n">bar</span>
+</code></pre></div></div>
+
+<h2 id="for_each-superpower">‘for_each’ superpower</h2>
+<p><a href="https://en.cppreference.com/w/cpp/algorithm/for_each">Cpp reference</a></p>
+
+<h2 id="lambda-expressions">Lambda Expressions</h2>
+
+<p><a href="https://en.cppreference.com/w/cpp/language/lambda">Cpp reference</a></p>
+
+<h2 id="unordered_set-vs-unordered_map">unordered_set vs unordered_map</h2>
+
+<ul>
+  <li>Set doesn’t need a value associated with the key, it’s a hash table with keys only</li>
+  <li>map is a hashtable, key and value pair.</li>
+</ul>
 :ET

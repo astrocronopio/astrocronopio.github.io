@@ -1,0 +1,18 @@
+I"�<h2 id="chapter-2---using-hf-transformers">Chapter 2 - Using HF Transformers</h2>
+
+<h3 id="about-the-inputoutput-values-of-the-hf-transformers">About the input/output values of the HF Transformers</h3>
+<p>You can use 🤗 Transformers without having to worry about which ML framework is used as a backend; it might be PyTorch or TensorFlow, or Flax for some models. However, <em>Transformer models only accept tensors as input</em>.</p>
+
+<p>To specify the type of tensors we want to get back (PyTorch, TensorFlow, or plain NumPy), we use the <code class="language-plaintext highlighter-rouge">return_tensors</code> argument: ‘pt’, ‘tf’ &amp; ‘np’? Default is a python list.</p>
+
+<h3 id="about-tf-and-the-heads">About TF and the heads</h3>
+
+<p>A model can be used for different purposes, it learns a set of hidden parameters/states then a ‘head’ changes these values to the task we want to do. The hidden states are a final representation of the input, then this is transformed into the actual output.</p>
+
+<p>Embeddings into the tokenized input <br />
+‘AutoModel’ is the model without a head
+‘AutoTokenizer’ is the Embeddings layers?
+‘AutoModelForSequenceClassification’ is a head for classification</p>
+
+<p>###</p>
+:ET

@@ -41,10 +41,12 @@ ORDER BY column_name(s);
 IS is for alphanumeric values and = is for numbers
 
 test
+```
 |name|value|
 |pepe| 11	|
 |pepa| 5 |
 |peepo| 11| 
+```
 
 
 ```
