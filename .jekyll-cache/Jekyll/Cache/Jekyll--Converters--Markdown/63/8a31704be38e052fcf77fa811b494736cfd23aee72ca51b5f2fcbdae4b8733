@@ -1,4 +1,4 @@
-I"4<h2 id="static-functionvariables-in-a-class">Static Function/Variables in a class</h2>
+I"�;<h1 id="static-functionvariables-in-a-class">Static Function/Variables in a class</h1>
 
 <p>Long time ago, I found a really nice example to understand it and I’m writing this post to document it. It took me a long time to understand what a static member/function is, why and when I should use it.</p>
 
@@ -34,7 +34,7 @@
 
 <p>This is not a good solution, I would have to count every time I create/delete a new user by hand. Wouldn’t it be nice to make c++ count for us? This is why we want to use a single variable inside the class to count: This is a static variable.</p>
 
-<h2 id="creating-the-user-class-with-a-static-counter">Creating the <code class="language-plaintext highlighter-rouge">user</code> class with a static counter</h2>
+<h3 id="creating-the-user-class-with-a-static-counter">Creating the <code class="language-plaintext highlighter-rouge">user</code> class with a static counter</h3>
 
 <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">User</span><span class="p">{</span>
 
@@ -59,7 +59,7 @@
 	<span class="n">user2</span><span class="p">.</span><span class="o">~</span><span class="n">User</span><span class="p">();</span> <span class="c1">//user_counter = 1</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<h2 id="how-do-we-access-this-static-counter-static-functions">How do we access this static counter?: Static Functions</h2>
+<h3 id="how-do-we-access-this-static-counter-static-functions">How do we access this static counter?: Static Functions</h3>
 
 <p>“Normal” functions can’t access static variables, and it makes sense since these variables are global to every instance of the class, i.e. the number of users can’t be accessed easily as it’s shared by everyone.</p>
 
@@ -135,7 +135,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h2 id="istringstream-from-sstream"><code class="language-plaintext highlighter-rouge">istringstream</code> from <code class="language-plaintext highlighter-rouge">sstream</code>:</h2>
+<h1 id="istringstream-from-sstream"><code class="language-plaintext highlighter-rouge">istringstream</code> from <code class="language-plaintext highlighter-rouge">sstream</code>:</h1>
 <p>This helps to get word from a string separated by a space.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
@@ -152,17 +152,33 @@
 <span class="n">bar</span>
 </code></pre></div></div>
 
-<h2 id="for_each-superpower">‘for_each’ superpower</h2>
+<h1 id="for_each-superpower">‘for_each’ superpower</h1>
 <p><a href="https://en.cppreference.com/w/cpp/algorithm/for_each">Cpp reference</a></p>
 
-<h2 id="lambda-expressions">Lambda Expressions</h2>
+<h1 id="lambda-expressions">Lambda Expressions</h1>
 
 <p><a href="https://en.cppreference.com/w/cpp/language/lambda">Cpp reference</a></p>
 
-<h2 id="unordered_set-vs-unordered_map">unordered_set vs unordered_map</h2>
+<h1 id="unordered_set-vs-unordered_map">unordered_set vs unordered_map</h1>
 
 <ul>
   <li>Set doesn’t need a value associated with the key, it’s a hash table with keys only</li>
   <li>map is a hashtable, key and value pair.</li>
 </ul>
+
+<h1 id="priority_queue">priority_queue</h1>
+<p>Import using <code class="language-plaintext highlighter-rouge">#include &lt;queue&gt;</code>
+By default:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">*</span> <span class="k">template</span><span class="o">&lt;</span>
+    <span class="k">class</span> <span class="nc">T</span><span class="p">,</span>
+    <span class="k">class</span> <span class="nc">Container</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">T</span><span class="p">&gt;,</span>
+    <span class="k">class</span> <span class="nc">Compare</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">less</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Container</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="k">class</span> <span class="nc">priority_queue</span><span class="p">;</span>
+<span class="c1">//-- </span>
+<span class="n">In</span><span class="o">:</span> <span class="mi">9</span> <span class="mi">8</span> <span class="mi">7</span> <span class="mi">6</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> 
+<span class="c1">// using push!</span>
+<span class="n">Out</span><span class="o">:</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span> 
+<span class="c1">//--</span>
+<span class="o">&gt;</span>
+</code></pre></div></div>
 :ET

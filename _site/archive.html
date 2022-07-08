@@ -13,12 +13,12 @@
 <meta name="author" content="evelyn@home" />
 
 
-<meta property="og:title" content="Archive" />
-<meta property="twitter:title" content="Archive" />
+<meta property="og:title" content="Posts" />
+<meta property="twitter:title" content="Posts" />
 
 
 
-    <title>Archive – evelyn@home – Code & Miscellanea</title>
+    <title>Posts – evelyn@home – Code & Miscellanea</title>
 
     <link rel="stylesheet" type="text/css" href="/style.css"/>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/ress/dist/ress.min.css"/>
@@ -69,11 +69,7 @@
 
   <a class="nav-menu-item" href="/contact.html">Contact</a>
 
-  <a class="nav-menu-item active" href="/archive">Archive</a>
-
-  <a class="nav-menu-item" href="/categories">Tags</a>
-
-  <a class="nav-menu-item" href="/search">Search</a>
+  <a class="nav-menu-item active" href="/archive">Posts</a>
 
 
           </nav>
@@ -83,13 +79,43 @@
     </div>
 
     <div id="main" role="main" class="container">
-      
+      <h2 id="looking-for-something">Looking for something?</h2>
+
+<p>Are you looking by <a href="/categories">categories</a>? <br /></p>
+
+<!-- Html Elements for Search -->
+<p><input type="text" id="search-input" placeholder="Find it here..." class="search-bar" autofocus="" />
+<br />
+<br /></p>
+<ul id="results-container"></ul>
+
+<section>
+    <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js" type="text/javascript"></script>
+        <script>
+        SimpleJekyllSearch({
+            searchInput: document.getElementById('search-input'),
+            resultsContainer: document.getElementById('results-container'),
+            json: '/assets/data/search.json',
+            searchResultTemplate: '<div class="search-title"><a href="{url}"><h3> {title}</h3></a><div class="meta"> <i class="fa fa-calendar fa-fw"></i> {date} <div class="right"><i class="fa fa-tags fa-fw"></i> {category}</div></div><p>{excerpt}</p></div><hr> ',
+            noResultsText: 'No results found',
+            limit: 10,
+            fuzzy: false,
+            exclude: []
+        })
+        </script>
+</section>
+
+<h3>July 2022</h3>
+<ul>
+    
+      <li><a href="/coding/ml/2022/07/06/DLS-Notes/">(Google ML Bootcamp LATAM) Notes on DLS Coursera</a></li>
+    
+  </ul>
+
 <h3>June 2022</h3>
 <ul>
     
       <li><a href="/leetcode/cpp/2022/06/11/387-easy-cpp-hstbl/">(c++) 387 - First Unique Character in a String</a></li>
-    
-      <li><a href="/coding/ml/2022/06/01/HF-notes/">Hugging Face Course Notes</a></li>
     
   </ul>
 
@@ -98,7 +124,7 @@
     
       <li><a href="/coding/essay/2022/05/26/postmortem-report/">Google SRE Book - Postmortem Culture [Extract]</a></li>
     
-      <li><a href="/coding/c++/cpp/2022/05/17/cpp-stuff-i-found-hard/">C++ - Notes</a></li>
+      <li><a href="/coding/c++/cpp/2022/05/17/cpp-notes/">C++ - Notes</a></li>
     
       <li><a href="/coding/leetcode/2022/05/11/Kadane/">Kadane's Algorithm &amp; LeetCode 53 Maximum Subarray</a></li>
     

@@ -1,8 +1,14 @@
 ---
 layout: default
-title: Archive
+title: Posts
 permalink: /archive
 ---
+
+## Looking for something?  
+
+Are you looking by <a href="/categories">categories</a>? <br>
+
+{% include search.html %}
 
 
 {% assign postsByYearMonth = site.posts | group_by_exp: "post", "post.date | date: '%B %Y'" %}

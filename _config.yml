@@ -42,14 +42,14 @@ navigation_links:
   - title: Contact
     url: /contact.html
     
-  - title: Archive
+  - title: Posts
     url: /archive
 
-  - title: Tags
-    url: /categories
+  # - title: Tags
+  #   url: /categories
 
-  - title: Search
-    url: /search
+  # - title: Search
+  #   url: /search
 
 
 

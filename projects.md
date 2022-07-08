@@ -23,9 +23,9 @@ permalink: /projects
 > **Packages/Frameworks I'm usually use:** Numpy, Matplotlib, Pandas, LaTeX, Gnuplot. <br>
 
 
-### What I'm currently learning
+<!-- ### What I'm currently learning
 > * Docker & Servers (MS SQL Server) 
 > * About Transformers in Hugging Face.
-> * AWS: I want to implement my networks in the cloud instead of using my local machine.
+> * AWS: I want to implement my networks in the cloud instead of using my local machine. -->
 
 ------------------
