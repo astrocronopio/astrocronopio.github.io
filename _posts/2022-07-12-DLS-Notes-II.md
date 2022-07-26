@@ -86,3 +86,8 @@ categories: [coding, ML]
 
     What about $p_i$? That's the softmax function, actually is a approximation of argmax! The soft function is differentiable.
 
+
+### Nice insight from a whatsapp group:
+
+- Underfitting: when "avoidable bias" is big
+- Overfitting: when "variance" is big
