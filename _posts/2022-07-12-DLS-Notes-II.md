@@ -7,6 +7,8 @@ categories: [coding, ML]
 
 ## Course 2: Improving DNNs: Hyperparameter Tuning, Regularization and Optimization
 
+I am ashamed of these notes, you can use them but sadly they are useful for me only.
+
 ### Week 1
 * High bias - Underfitting
 * High variance - Overfitting
@@ -87,7 +89,7 @@ categories: [coding, ML]
     What about $p_i$? That's the softmax function, actually is a approximation of argmax! The soft function is differentiable.
 
 
-### Nice insight from a whatsapp group:
+### Nice insight 
 
 - Underfitting: when "avoidable bias" is big
 - Overfitting: when "variance" is big
