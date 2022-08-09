@@ -87,8 +87,3 @@ We might find new categories while searching through the images.
     * Nomenclature: End-to-End means that the model learns all the steps between the initiall input phase to the output result.
 
     
-
-
-
-## Course 4: CNNs
-
