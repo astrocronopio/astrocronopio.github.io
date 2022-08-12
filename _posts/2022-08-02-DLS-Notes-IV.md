@@ -34,8 +34,14 @@ categories: [coding, ML]
     *  Concatenate different filters in the same layer.  
     * It takes the previous activation values and then computes different 1x1 convs with differents channels as a previous step for the filter. We could put a maxpool too. Then we concatenate the outputs of each set of filters.
     * It has different sidebranches, it takes a middle layer and uses it as an output layer, it calculates the backprop from them and adds them the the "main" backpropr from the real output.
+    * In a CNN (such as Google's Inception network), bottleneck layers are added to reduce the number of feature maps (aka channels) in the network, which, otherwise, tend to increase in each layer. This is achieved by using 1x1 convolutions with fewer output channels than input channels. (from SO)
 
 * MobileNet:
     * It uses a depthwise and pointwise convolution to reduce the number of calculations it performs. It loses information between the pixel in different channel directly. It retrives this "lateral channel" information only for a single pixel and its channels.
+    * v2: It has a residual conection as well as two sets of 1x1 filters, expansion and projection. The first enlarges the input value, then it goes throught by the depthwise conv and then the projection 1x1 convolution does the same as the pointwise in reducing the depthwise dimensions.
 
+* EfficientNet:
+    * Most DLNs can be roughly described as 3 parameters: input resolution (r), layers vertical width (w) e.g. kernel size and network depth (d). There is a tradeoff between these characterictics for an efficient use of resources.
 
+## State of Computer Vision
+* I need to study more about engineering.
