@@ -16,7 +16,7 @@ categories: [coding, ML]
 * Usually layers are layers that have weights, maxpool for example is not counted towards the number of layer in the CNN
 
 
-#### Case Studies
+## Case Studies
 
 * Usually the width and height goes down and the features number goes up (by 2 as VGG for reference)
 * ResNets: Residual Network as a solution for vanishing gradient.
@@ -45,3 +45,27 @@ categories: [coding, ML]
 
 ## State of Computer Vision
 * I need to study more about engineering.
+
+
+
+
+## What you should remember:
+
+* MobileNetV2's unique features are:
+    * Depthwise separable convolutions that provide lightweight feature filtering and creation
+    * Input and output bottlenecks that preserve important information on either end of the block
+    * Depthwise separable convolutions deal with both spatial and depth (number of channels) dimensions
+
+    *  From the network:
+    ```
+    base_model = tf.keras.applications.MobileNetV2(input_shape=None,
+                              include_top=None, # <== Important!!!!
+                              weights=None) # From imageNet
+    ```
+
+## What you should remember:
+
+* To adapt the classifier to new data: Delete the top layer, add a new classification layer, and train only on that layer
+* When freezing layers, avoid keeping track of statistics (like in the batch normalization layer)
+* Fine-tune the final layers of your model to capture high-level details near the end of the network and potentially improve accuracy
+
