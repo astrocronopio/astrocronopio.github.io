@@ -69,3 +69,27 @@ categories: [coding, ML]
 * When freezing layers, avoid keeping track of statistics (like in the batch normalization layer)
 * Fine-tune the final layers of your model to capture high-level details near the end of the network and potentially improve accuracy
 
+
+## Object Localization
+* There is a object/background flag in the output, the probability that there is an object, probability of detection
+* Landmarks detection: points must be consisted among output/samples
+* Sliding window is a method that output 1/0 if an object is there. This can be done with a convnet to check all windows in one sweep.
+* YOLO is amazing, the output is a tensor of the data for a section of the input image grid.
+* The dimensions of the box is relative to its place inside the grid, i.e 0.75 the width and 1.1 the height, these values can be over 1 but they can't be negative.
+* Metric: Intersection over Union
+    ![Beautiful](/media/posts/iou.png)
+* Non-Max Supression:
+    * Suppresses the boxes with high probability of dectection around the highest probability.
+    * The chance is non negligible over 0.6
+    * Calculate the IOU to measure the overlap between the boxes, then discard the boxes with IoU over 0.5.
+    * Repeat for every object.
+* Anchor Box Algorith: Overlapping objects
+    * The output target is larger as it fits now two sets of boxes.
+    * e.g. Anchor box 1 is a vertical box and 2 is  horizontal
+    * There are two objects in the same grid cell. 
+    * It helps to specialize in detecting 
+* Semantic Segmantatio U-Net
+    * Transpose Convolution:
+<!-- * The YOLO algorithm:
+    * Input
+    *  -->
