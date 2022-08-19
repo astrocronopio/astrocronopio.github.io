@@ -89,7 +89,18 @@ categories: [coding, ML]
     * There are two objects in the same grid cell. 
     * It helps to specialize in detecting 
 * Semantic Segmantatio U-Net
-    * Transpose Convolution:
-<!-- * The YOLO algorithm:
+    * Transpose Convolution: Remember once you read about Anime Girl GAN? It's a way to "un-do" the convolution. It uses padding, strides and filter similar to a simple convolution, except you take a value from the input, multiple by the whole filter going from a 1x1 to fxf.
+    * The first part of the network compresses the input.
+    * The second part uses transpose convolution to return to the original dimensions, but it has skipped connections from the early layers to the last layers for the details.
+
+
+## What you should remember:
+
+- Semantic image segmentation predicts a label for every single pixel in an image
+- U-Net uses an equal number of convolutional blocks and transposed convolutions for downsampling and upsampling
+- Skip connections are used to prevent border pixel information loss and overfitting in U-Net
+
+
+    <!-- * The YOLO algorithm:
     * Input
     *  -->
