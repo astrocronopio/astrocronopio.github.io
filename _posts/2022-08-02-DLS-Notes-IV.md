@@ -94,13 +94,28 @@ categories: [coding, ML]
     * The second part uses transpose convolution to return to the original dimensions, but it has skipped connections from the early layers to the last layers for the details.
 
 
-## What you should remember:
+#### What you should remember:
 
 - Semantic image segmentation predicts a label for every single pixel in an image
 - U-Net uses an equal number of convolutional blocks and transposed convolutions for downsampling and upsampling
 - Skip connections are used to prevent border pixel information loss and overfitting in U-Net
 
 
-    <!-- * The YOLO algorithm:
-    * Input
-    *  -->
+
+## Face Recognition
+* Verification vs Recognition
+* One Shot Learning: One shot means that you only have a single image to compare, or you only have s single training sample for a single face.
+* Triple Loss: 
+    * For each weight update, we need three images, Anchor Image (A), Positive Image (P) and Negative Image (N). Anchor is a reference image which we compare to the Positive image (another picture of the same person) and Negative image (some random mugshot).
+    * The distance from the anchor and the positive is $d(A,P) = ||f(A)-f(P)||^2$, similar for anchor and positive $d(A,N) = ||f(A)-f(N)||^2$.
+    
+    * We want that $d(A,P) 
+    \leq d(A,N)$, or $d(A,P)-d(A,N) + \alpha \leq 0$, the parameter $\alpha > 0$ helps to avoid the trivial solution d=0.
+    * The lost function is now: $L(A,P,N) = max(d(A,P)-d(A,N)+\alpha,0)$. Note that the network is update ONLY if the condition $d(A,P)-d(A,N) + \alpha \leq 0$ is not met.
+    * Choose triplets that are hard to learn.
+* Learning the similarity function, if distance(imag1, imag2) < $\tau$ is a simple approach. We could think this problem as a Binary Classification problem (there are/are not the same person), i.e $\hat{y} = \sigma(\Sigma_k w_k|f(x^{(i)}_k - x^{(j)}_k|) + b$, one output neuron.
+
+    Similarity functions:
+    *   $|f(x^{(i)}_k - x^{(j)}_k|$
+    * $\frac{|f(x^{(i)}_k - x^{(j)}_k|^2}{f(x^{(i)}_k + x^{(j)}_k}$ related to $\chi$ square we all know and love.
+
