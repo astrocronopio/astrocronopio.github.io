@@ -4,6 +4,15 @@ title: Using Internet Smarter
 categories: [notepad]
 ---
 
+## Paint Online
+
+https://jspaint./
+
+## Markdown Online
+
+https://dillinger.io/
+
+
 
 
 ## Twitter Alternative Browser: nitter.net
