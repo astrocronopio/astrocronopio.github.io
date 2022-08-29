@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Resources for CI/CD properly
-categories: [coding, essay]
+title: Resources and Tips for CI/CD
+categories: [coding, resources]
 ---
 
 

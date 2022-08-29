@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Using Internet Smarter
-categories: [notepad]
+categories: [notepad, resources]
 ---
 
 ## Paint Online
