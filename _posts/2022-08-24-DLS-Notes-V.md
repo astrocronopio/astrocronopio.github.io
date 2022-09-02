@@ -151,9 +151,19 @@ $$\mathbf{y}^{\langle t \rangle}_{pred} = \textrm{softmax}(\mathbf{W}_{y} \mathb
         * When a unit in the update gate is close to 0, it's prevented from being passed onto the hidden state.
     * And an <b>output</b> gate, which decides what gets sent as the output of the time step
 
-<font color='blue'><b> What you should remember:</b>
+#### What you should remember:
     
 - A sequence model can be used to generate musical values, which are then post-processed into midi music. 
 - You can use a fairly similar model for tasks ranging from generating dinosaur names to generating original music, with the only major difference being the input fed to the model.  
 - In Keras, sequence generation involves defining layers with shared weights, which are then repeated for the different time steps $1, \ldots, T_x$. 
 
+#### What you should remember:
+- If you have an NLP task where the training set is small, using word embeddings can help your algorithm significantly. 
+- Word embeddings allow your model to work on words in the test set that may not even appear in the training set. 
+- Training sequence models in Keras (and in most other deep learning frameworks) requires a few important details:
+    - To use mini-batches, the sequences need to be **padded** so that all the examples in a mini-batch have the **same length**. 
+    - An `Embedding()` layer can be initialized with pretrained values. 
+        - These values can be either fixed or trained further on your dataset. 
+        - If however your labeled dataset is small, it's usually not worth trying to train a large pre-trained set of embeddings.   
+    - `LSTM()` has a flag called `return_sequences` to decide if you would like to return every hidden states or only the last one. 
+    - You can use `Dropout()` right after `LSTM()` to regularize your network.
