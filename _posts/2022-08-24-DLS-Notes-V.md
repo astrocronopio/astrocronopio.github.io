@@ -157,7 +157,7 @@ $$\mathbf{y}^{\langle t \rangle}_{pred} = \textrm{softmax}(\mathbf{W}_{y} \mathb
 - You can use a fairly similar model for tasks ranging from generating dinosaur names to generating original music, with the only major difference being the input fed to the model.  
 - In Keras, sequence generation involves defining layers with shared weights, which are then repeated for the different time steps $1, \ldots, T_x$. 
 
-#### What you should remember:
+#### What you should remember (This applies only to tensorflow layers):
 - If you have an NLP task where the training set is small, using word embeddings can help your algorithm significantly. 
 - Word embeddings allow your model to work on words in the test set that may not even appear in the training set. 
 - Training sequence models in Keras (and in most other deep learning frameworks) requires a few important details:
@@ -167,3 +167,9 @@ $$\mathbf{y}^{\langle t \rangle}_{pred} = \textrm{softmax}(\mathbf{W}_{y} \mathb
         - If however your labeled dataset is small, it's usually not worth trying to train a large pre-trained set of embeddings.   
     - `LSTM()` has a flag called `return_sequences` to decide if you would like to return every hidden states or only the last one. 
     - You can use `Dropout()` right after `LSTM()` to regularize your network.
+
+
+
+2.2.1 Block Training for BatchNormalization Layers
+
+If you are going to fine-tune a pretrained model, it is important that you block the weights of all your batchnormalization layers. If you are going to train a new model from scratch, skip the next cell. 
