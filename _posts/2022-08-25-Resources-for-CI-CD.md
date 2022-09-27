@@ -4,6 +4,9 @@ title: Resources and Tips for CI/CD
 categories: [coding, resources]
 ---
 
+## Oh shit I hate github
+
+https://ohshitgit.com/
 
 ### Versioning
 
