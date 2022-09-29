@@ -1,6 +1,6 @@
 ---
 layout: post
-title: [Polka] Rojas Silva Rekávo - Emiliano R Fernandez/Mauricio Cardozo Ocampo
+title:  (Polka) Rojas Silva Rekávo - Emiliano R Fernandez/Mauricio Cardozo Ocampo
 categories: [guarani, music]
 ---
 
