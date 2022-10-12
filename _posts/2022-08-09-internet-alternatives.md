@@ -4,16 +4,22 @@ title: Using Internet Smarter
 categories: [notepad, resources]
 ---
 
+## Youtube Alternative Client: 
+
+https://piped.kavin.rocks/
+
+
+And the Open Source code: https://github.com/TeamPiped
+
+
 
 ## Paint Online
 
-https://jspaint./
+https://jspaint.app/
 
 ## Markdown Online
 
 https://dillinger.io/
-
-
 
 
 ## Twitter Alternative Browser: nitter.net
