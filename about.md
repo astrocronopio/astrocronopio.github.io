@@ -9,4 +9,4 @@ permalink: /about
 
 * I worked for 6 months as Data Scientist in the DESY ATLAS Group in Hamburg, Germany, applying Machine Learning approaches to Particle Physics. I studied Deep Graphs NN VAEs modeling energy readings inside the ATLAS Experiment.
 
-* I have working as a Machine Learning engineer at [Jampp](https://www.jampp.com) since July, 2022. I work mostly on MLOps. I helped them train with healthy data, stabilized their predictions using a tool I developed, as well as creating different monitoring tools for product and data science teams.
+* I play many games, mostly RPG PC games.
