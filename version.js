@@ -4,14 +4,13 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Function to get the current date and time
     function getCurrentDateTime(format = 'day-month-year') {
-        const now = new Date();
-        return now.toLocaleDateString();
+        return '03.08.24';
     }
 
 
     // Function to get the version of the website
     function getVersion() {
-        return "3.1.0";
+        return "3.1.1";
     }
 
     // Update the 'last-updated' span with the current date and time
