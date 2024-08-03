@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Function to get the current date and time
     function getCurrentDateTime(format = 'day-month-year') {
-        return '01.08.24';
+        return '03.08.24';
     }
 
 
