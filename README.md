@@ -8,6 +8,8 @@ stylesheet, no build step.
 - `index.html` redirects to `about.html`.
 - `home.html` is the personal side. `about.html` is the professional side.
 - `media/writings/` holds personal texts. `media/blog/` holds tech posts.
+  `media/blog/one-month-of-learning.html` is the day-by-day log of the 2026
+  learning month; entries are hand-maintained and dated by first commits.
 - `style.css` styles every page. `version.js` prints version and date.
 - `theme.js` runs the light and dark theme toggle.
 

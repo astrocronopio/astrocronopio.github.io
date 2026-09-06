@@ -503,3 +503,147 @@ a:focus-visible,
         transition: none;
     }
 }
+
+
+/* ===========================================
+   Blog timeline (one-month log)
+   Day-by-day log for media/blog/one-month-of-learning.html.
+   Each week is its own .timeline block; the rail is a
+   pseudo-element, so it never collides with the h3 week
+   headers above or below the block.
+   =========================================== */
+
+/* Week block: gutter on the left reserves room for the rail. */
+.timeline {
+    position: relative;
+    margin: 14px 0 36px;
+    padding-left: 40px;
+    border-left: none;
+}
+
+/* The vertical rail, faded at both ends. */
+.timeline::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 10px;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(to bottom,
+            var(--accent-soft) 0%,
+            var(--color-line) 22%,
+            var(--color-line) 78%,
+            var(--accent-soft) 100%);
+}
+
+/* Each entry is a frosted panel sitting to the right of the rail. */
+.timeline .tl-entry {
+    position: relative;
+    margin: 0 0 28px;
+    padding: 20px 24px 18px;
+    overflow-wrap: break-word;
+    background-color: var(--color-inset);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.timeline .tl-entry:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-soft);
+}
+
+/* Marker dot centred on the rail, aligned to the date badge line. */
+.timeline .tl-entry::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: -35px;
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    transition: transform 0.2s ease;
+}
+
+.timeline .tl-entry:hover::before {
+    transform: scale(1.2);
+}
+
+/* The date as a compact badge pill. */
+.timeline .tl-date {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 0 10px;
+    padding: 4px 12px;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: bold;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background-color: var(--accent-soft);
+    border: 1px solid var(--accent-soft);
+    border-radius: 999px;
+}
+
+/* Project names inside an entry get a quiet accent underline. */
+.timeline .tl-entry strong {
+    color: var(--color-text);
+    font-weight: bold;
+    border-bottom: 1px solid var(--accent-soft);
+}
+
+/* Inline code tokens inside entries read as small chips. */
+.timeline code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 0.1em 0.5em;
+    background-color: var(--color-surface-hover);
+    border: 1px solid var(--color-line-soft);
+    border-radius: var(--radius-sm);
+}
+
+.timeline .tl-entry p:last-child {
+    margin-bottom: 0;
+}
+
+/* Narrow screens: compress the rail gutter, keep the badges on top. */
+@media only screen and (max-width: 600px) {
+    .timeline {
+        margin: 10px 0 30px;
+        padding-left: 30px;
+    }
+
+    .timeline::before {
+        left: 7px;
+    }
+
+    .timeline .tl-entry {
+        margin: 0 0 22px;
+        padding: 16px 16px 14px;
+    }
+
+    .timeline .tl-entry::before {
+        top: 21px;
+        left: -28px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .timeline .tl-entry,
+    .timeline .tl-entry::before {
+        transition: none;
+    }
+
+    .timeline .tl-entry:hover,
+    .timeline .tl-entry:hover::before {
+        transform: none;
+    }
+}
