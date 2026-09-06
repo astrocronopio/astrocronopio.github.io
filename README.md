@@ -10,8 +10,24 @@ stylesheet, no build step.
 - `media/writings/` holds personal texts. `media/blog/` holds tech posts.
   `media/blog/one-month-of-learning.html` is the day-by-day log of the 2026
   learning month; entries are hand-maintained and dated by first commits.
-- `style.css` styles every page. `version.js` prints version and date.
+- `style.css` styles every page. `version.js` prints version and date by
+  reading `version.json`, which `gen-version.sh` regenerates from git.
 - `theme.js` runs the light and dark theme toggle.
+
+## Version stamp
+
+The home page shows "Last updated / Version". The values come from
+`version.json`, not from hand-edited code.
+
+- `gen-version.sh` regenerates `version.json` from git: the date of the
+  last commit and the short commit hash.
+- A pre-commit hook runs it and stages the file, so every commit ships a
+  fresh stamp. Install it once with:
+
+      ln -s ../../.githooks/pre-commit .git/hooks/pre-commit
+
+- If `version.json` cannot be loaded, `version.js` hides the line instead
+  of showing stale data.
 
 ## Theme system
 
