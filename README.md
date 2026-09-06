@@ -48,6 +48,6 @@ All colors live in CSS custom properties on `:root` in `style.css`.
 
 ## Backgrounds
 
-Each page sets its own wallpaper: `body.home` and `body.about` in
-`style.css`, and inline `<style>` blocks in the writing pages. New pages
-can do either.
+Each page sets its own wallpaper with a body class: `body.home`,
+`body.about`, and `body.writing`, all in `style.css`. New pages can add
+another class there.

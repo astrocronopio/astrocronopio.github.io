@@ -177,6 +177,10 @@ body.about {
     background-image: url("./media/wallpaper/matrix_room_hd.jpeg");
 }
 
+body.writing {
+    background-image: url("./media/wallpaper/moon_and_star.jpg");
+}
+
 /* ---------- Layout ---------- */
 .container {
     width: min(92%, 900px);
