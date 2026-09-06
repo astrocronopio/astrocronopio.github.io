@@ -37,9 +37,8 @@
                 <p>
                     After the <a href="google-exit-caldav.html">Google Exit</a> my tasks and calendar
                     live on my own CalDAV server. But a server is not a product. I needed two small
-                    apps on top: one for tasks, one for habits, plus the glue that keeps my kanbans,
-                    my phone and my browser looking at the same data. This is how it is all
-                    orchestrated in the backend.
+                    apps on top (one for tasks, one for habits) plus the glue that keeps my kanbans,
+                    my phone and my browser on the same data.
                 </p>
 
                 <h3>The stack</h3>
@@ -90,12 +89,12 @@ divalien-kanban.timer (every 30 min)   tailscale serve       HTTPS
 
                 <h3>The habit tracker</h3>
                 <p>
-                    Habits are a different problem from tasks, so they get a different app:
-                    <strong>Alien Tracker</strong> (a fork of Beaver Habits), a Python/NiceGUI app on
-                    the mini at <code>:8081</code>. No login: a trusted-email drop-in authenticates
-                    the single user. Habits live in SQLite as a JSON blob, one row per habit with its
-                    records, tags and streaks. It is deliberately separate from CalDAV, because a
-                    habit is not a to-do. It links out to the tasks when you want to go deeper.
+                    Habits are not tasks, so they get a different app: <strong>Alien Tracker</strong>
+                    (a fork of Beaver Habits), a Python/NiceGUI app on the mini at
+                    <code>:8081</code>. No login: a trusted-email drop-in authenticates the single
+                    user. Habits live in SQLite as a JSON blob, one row per habit with its records,
+                    tags and streaks. Deliberately separate from CalDAV, because a habit is not a
+                    to-do.
                 </p>
                 <!-- [IMG] Screenshot de Alien Tracker (:8081, streaks y records): media/blog/screenshots/alien-tracker-ui.png -->
 

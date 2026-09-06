@@ -48,7 +48,7 @@
                 <h3>The problem: real money, invisible bill</h3>
                 <p>
                     The org spends real money on AI coding tools and almost nobody can see the invoice.
-                    The Anthropic Admin Console is reachable by a handful of people (CTO, and so on).
+                    The Anthropic Admin Console is reachable by a handful of people (CTO and a few others).
                 </p>
                 <p>
                     A question nobody could answer: how much do we spend, per model, per team, and is it
@@ -77,8 +77,8 @@ claude_code_cost_usage_total{instance="&lt;work-machine&gt;",job="claude_code_ev
                     <code>session_id</code>, <code>terminal_type</code>, <code>organization_id</code>.
                 </p>
                 <p>
-                    The emitter already exists and it is Anthropic's: zero instrumentation, zero code to maintain. The work became configuring
-                    the export, a dashboard, and onboarding.
+                    The emitter already exists and it is Anthropic's: zero instrumentation, zero code
+                    to maintain. The work became configuring the export, a dashboard, and onboarding.
                 </p>
 
                 <h3>The trap: "telemetry on" but Prometheus read it wrong</h3>
@@ -88,12 +88,9 @@ claude_code_cost_usage_total{instance="&lt;work-machine&gt;",job="claude_code_ev
                 </p>
                 <p>
                     The naive panel query was <code>sum(claude_code_cost_usage_total)</code>. When the
-                    counter resets, the sum() loses everything the reset ate, under-reporting cost by 90%
-                    or more.
-                </p>
-                <p>
-                    The personal smoke test caught a REAL defect before rollout. That is exactly what a
-                    staging pilot is for.
+                    counter resets, sum() loses everything the reset ate: cost under-reported by 90%
+                    or more. The personal smoke test caught a REAL defect before rollout. That is
+                    exactly what a staging pilot is for.
                 </p>
 <pre class="writing-code"># WRONG: sum() on a resetting counter under-reports cost by 90%+
 sum(claude_code_cost_usage_total)
@@ -109,14 +106,13 @@ sum(increase(claude_code_cost_usage_total[$__range]))</pre>
                 <p>
                     <code>pushgateway-preview.&lt;company&gt;.com</code>: test the full pipeline without
                     touching prod. The dashboard "Claude Code - Usage & Cost" on staging Grafana came
-                    alive with real smoke test data. I prefer not to post a screenshot of my work grafana,
-                    but the dashboard is a good enough monitoring of my usage, I splited by project
-                    and model, and it is already useful.
+                    alive with real smoke test data. I will not post a screenshot of my work Grafana,
+                    but the dashboard already does its job: usage split by project and model.
                 </p>
                 <h3>Lessons</h3>
                 <ul>
                     <li>
-                        The factory emitter kills the zero code to maintain parser. If the tool already emits OTel,
+                        The native emitter kills the homegrown parser. If the tool already emits OTel,
                         do not maintain a parser that breaks with every update. The work is reading well,
                         not instrumenting.
                     </li>

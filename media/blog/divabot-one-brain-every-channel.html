@@ -36,13 +36,10 @@
 
                 <p>
                     In the last post I built a local AI assistant on a handheld PC, learned what a token
-                    costs on hardware I can touch, and admitted the API won. The lesson of the
-                    handheld PC was about hardware; this one is about architecture. Both were worth
-                    building.
-                </p>
-                <p>
-                    This is the sequel: what happened after the API won. A model alone is not an assistant: it is a function you
-                    call. To make DIVA actually live in my life I needed a channel: Discord.
+                    costs on hardware I can touch, and admitted the API won. That post was about
+                    hardware; this one is about architecture. A model alone is not an assistant: it is
+                    a function you call. To make DIVA actually live in my life I needed a channel:
+                    Discord.
                 </p>
 
                 <h3>One brain, many channels</h3>
@@ -52,8 +49,8 @@
                     and a terminal CLI all call the same <code>ask_llm(prompt) -&gt; str</code>.
                 </p>
                 <p>
-                If I want a Telegram bot tomorrow, I write the
-                    frontend and nothing else. The frontends do not know or care which model answers them.
+                    If I want a Telegram bot tomorrow, I write the frontend and nothing else. The
+                    frontends do not know or care which model answers them.
                 </p>
 <pre class="writing-code">def ask_llm(prompt: str) -&gt; str:
     if PROVIDER == "deepseek":
@@ -67,11 +64,11 @@
 
                 <h3>Two providers, one switch</h3>
                 <p>
-                    DIVA can run on the local llama.cpp server or on the DeepSeek API, selected with a
-                    single environment variable, <code>LLM_PROVIDER</code>. Both are "OpenAI-compatible"
-                    and yet they are not the same endpoint. Same shape, different fields.
-                    The trick was to make the retry layer take an extractor function, so the only
-                    difference between providers is a lambda:
+                    DIVA runs on the local llama.cpp server or on the DeepSeek API, selected with one
+                    environment variable, <code>LLM_PROVIDER</code>. Both are "OpenAI-compatible" and
+                    yet they are not the same endpoint: same shape, different fields. The trick was to
+                    make the retry layer take an extractor function, so the only difference between
+                    providers is a lambda:
                 </p>
 <pre class="writing-code"># local llama.cpp
 lambda data: data["choices"][0]["text"].strip()
@@ -79,8 +76,8 @@ lambda data: data["choices"][0]["text"].strip()
 lambda data: data["choices"][0]["message"]["content"].strip()</pre>
                 <p>
                     "OpenAI-compatible" is a de facto standard now, and it is a gift: your code does not
-                    care who serves the tokens. Local inference is still there, but the brain is swappable, which is
-                    exactly why the API can win without a rewrite.
+                    care who serves the tokens. Local inference is still there, but the brain is
+                    swappable — exactly why the API can win without a rewrite.
                 </p>
 
                 <h3>Retries, because servers fail</h3>
@@ -90,19 +87,18 @@ lambda data: data["choices"][0]["message"]["content"].strip()</pre>
                     Three attempts, no more.
                 </p>
                 <p>
-                    Exponential backoff matters because if every client retried
-                    with a fixed delay, a struggling server would get hit by a synchronized wall of
-                    requests at the same instant.
+                    With a fixed delay, every client would hit a struggling server with a
+                    synchronized wall of requests at the same instant.
                 </p>
 
                 <h3>What building this taught me</h3>
                 <ul>
                     <li>
-                        The model is the commodity, the engineering around it is yours. Two platforms, either local or remote without touching the frontends.
+                        The model is the commodity, the engineering around it is yours. Two platforms, local or remote, without touching the frontends.
                     </li>
                     <li>
                         Do not block the event loop. The LLM call is synchronous, so the Discord handler
-                        runs it in a thread (<code>asyncio.to_thread</code>) otherwise, one slow model
+                        runs it in a thread (<code>asyncio.to_thread</code>). Otherwise one slow model
                         response would freeze every other command on the bot.
                     </li>
                 </ul>
@@ -111,10 +107,8 @@ lambda data: data["choices"][0]["message"]["content"].strip()</pre>
                 <p>
                     Last post I ended with "the practical choice is the reliable one". Nothing changed:
                     the brain still mostly runs on the DeepSeek API, and the local llama.cpp server is a
-                    fallback I can flip to with one variable.
-                </p>
-                <p>
-                    The difference is that now it does not matter which one wins, because the software around it is mine.
+                    fallback I can flip to with one variable. The difference is that now it does not
+                    matter which one wins, because the software around it is mine.
                 </p>
             </div>
         </div>
