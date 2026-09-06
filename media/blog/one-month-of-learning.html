@@ -35,25 +35,23 @@
             <div class="writing-body">
 
                 <p>
-                    On July 26 I started the project I had been postponing for a while: stop treating
-                    inference as a black box and run my own agents on hardware I can touch. One month
-                    later I have a fleet of agents across two machines, my calendar and my tasks out of
-                    Google, my habits and my reading notes self-hosted, a Grafana dashboard that tells
-                    me what every agent costs, and this website as the public face of all of it.
+                    On July 26 I started the project I had been postponing: stop treating inference
+                    as a black box and run my own agents on hardware I can touch. One month later I
+                    have a fleet of agents across two machines, my calendar and tasks out of Google,
+                    my habits and reading notes self-hosted, a Grafana dashboard with the cost of
+                    every agent, and this website as the public face.
                 </p>
                 <p>
                     This page is the log of that month, day by day. Every date is the day the work
-                    landed in a repo or on a machine, taken from first commits and file timestamps.
-                    The public projects are linked. The rest are still private: they are named here,
-                    and that is all.
+                    landed in a repo or on a machine, from first commits and file timestamps. Public
+                    projects are linked. The rest are still private: named here, and that is all.
                 </p>
 
                 <h3>Week 1 &middot; Jul 26 – Aug 1: local inference</h3>
                 <p>
-                    The mission: know what a token actually costs on hardware I own. The first GGUFs
+                    The mission: know what a token costs on hardware I own. The first GGUFs
                     (Hermes 3.1 8B, Qwythos-9B MTP, Gemma 12B, Qwen3.5-9B) were already sitting in
-                    <code>~/models</code> from the days before. Then came the real work: ROCm,
-                    llama.cpp, and a BIOS trick.
+                    <code>~/models</code>. Then the real work: ROCm, llama.cpp, and a BIOS trick.
                 </p>
 
                 <div class="timeline">
@@ -111,9 +109,9 @@
                         <p class="tl-date">Aug 4</p>
                         <p>
                             Two private projects start. <strong>smarter-obsidian</strong>: a read-only
-                            audit of a four-year Obsidian vault, the first phase of giving every note a
-                            provenance and a lifecycle tag without touching the text. <strong>ml_portfolio</strong>:
-                            the scaffolding for a fully public fine-tune plus drift project.
+                            audit of a four-year Obsidian vault — provenance and lifecycle tags for
+                            every note, without touching the text. <strong>ml_portfolio</strong>:
+                            scaffolding for a public fine-tune plus drift project.
                         </p>
                     </div>
 
@@ -177,7 +175,7 @@
                             the bare loop by hand, then LangChain, then LangGraph, then an ML agent whose
                             numbers come from real tools. <strong>kimi-war-games</strong> (private): first
                             authorized red/blue run — Kimi K3 attacks this machine while a blue agent
-                            watches and reports.
+                            watches.
                         </p>
                     </div>
 
@@ -390,9 +388,7 @@
                 </ul>
 
                 <p>
-                    Every date above is the day the work landed in a repo or on a machine, from git
-                    logs and file timestamps. The next month starts the same way: a repo, a date, and
-                    something that works.
+                    The next month starts the same way: a repo, a date, and something that works.
                 </p>
 
             </div>

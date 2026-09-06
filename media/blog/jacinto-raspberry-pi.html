@@ -67,11 +67,10 @@
   bash -c "curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash"'</pre>
                 <p>
                     Cloud provider only (a quantized 8B does not boot in 1&nbsp;GB), and its own
-                    Discord bot token: one token is one connection. The bot is my ops console: I
-                    maintain everything I host on the Pi from its chat. I typed "deploy alienhabits"
-                    and it did: wrote the unit, documented it in its own skill, scrubbed the
-                    password from the chat. Vaultwarden, the sync, the exporter binds, all managed
-                    the same way.
+                    Discord bot token: one token is one connection. The bot is my ops console. I
+                    typed "deploy alienhabits" and it did: wrote the unit, documented it in its own
+                    skill, scrubbed the password from the chat. Vaultwarden, the sync, the exporter
+                    binds — all managed from its chat.
                 </p>
 
                 <figure class="writing-figure">
@@ -82,11 +81,11 @@
         
                 <h3>The mirror</h3>
                 <p>
-                    Twelve repos cloned over SSH (by rule, bidirectional), Syncthing keeps the vault
-                    (8,617 files) and backups in both machines, and <code>node_exporter</code> feeds a
-                    <code>jacinto-health</code> dashboard (fourteen panels), plus Prometheus and the
-                    Pushgateway answer from the Pi when the Win Mini sleeps. One-gigabyte budget: zram
-                    swap, Bluetooth off, journald capped.
+                    Twelve repos cloned over SSH (by rule, bidirectional). Syncthing keeps the vault
+                    (8,617 files) and backups on both machines. <code>node_exporter</code> feeds a
+                    <code>jacinto-health</code> dashboard (fourteen panels), and Prometheus plus the
+                    Pushgateway answer from the Pi when the Win Mini sleeps. One-gigabyte budget:
+                    zram swap, Bluetooth off, journald capped.
                 </p>
                 <!-- [IMG] Screenshot del dashboard jacinto-health (14 panels, Prometheus scraping al Pi): media/blog/screenshots/jacinto-health-dashboard.png -->
 

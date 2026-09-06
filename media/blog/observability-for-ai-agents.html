@@ -112,7 +112,6 @@
                 <p>
                     They talk to different models and store their sessions in different formats
                     (SQLite, JSONL, zstd-compressed JSONL), and none of them knows the others exist.
-
                     Orchestration is a human job: I decide who does what, I review what comes back,
                     and the agents get to merge their own PRs after I verify them.
                 </p>
@@ -157,20 +156,20 @@
                 </p>
                 <p>
                     <strong>A trailing slash zeroed 158 sessions.</strong> Hermes recorded DeepSeek
-                    usage with a base URL ending in <code>https://api.deepseek.com/v1/</code> with the
-                    slash. The pricing matcher expected no slash. Every one of those sessions had its
-                    tokens counted and its cost silently set to zero. Not a crash, not an error: a
-                    quiet undercount. The fix was a local price table in the adapter, applied to any
-                    row whose cost was cleanly zero.
+                    usage with a base URL ending in <code>https://api.deepseek.com/v1/</code>; the
+                    pricing matcher expected no slash. Those sessions had their tokens counted and
+                    their cost silently set to zero. Not a crash, not an error: a quiet undercount.
+                    The fix: a local price table in the adapter, applied to any row whose cost was
+                    cleanly zero.
                 </p>
                 <p>
                     <strong>Dedup was eating real money.</strong> The wrapper deduplicates events on
                     (agent, session, model), but the Hermes adapter emitted one event per
-                    (agent, session, model, provider, task). Whenever a session had both a priced row
-                    and an estimated row, the whole event vanished, about $0.34 per sync, forever. The
-                    contract was ambiguous, so the pipeline lied in the least visible direction. Fix:
-                    one event per (session, model), merging rows, and a contract test that asserts
-                    zero duplicates.
+                    (agent, session, model, provider, task). A session with both a priced row and an
+                    estimated row vanished whole: about $0.34 per sync, forever. The contract was
+                    ambiguous, so the pipeline lied in the least visible direction. Fix: one event
+                    per (session, model), merging rows, plus a contract test that asserts zero
+                    duplicates.
                 </p>
                 <p>
                     <strong>Prometheus itself overcounts resets.</strong> A poisoned snapshot once
