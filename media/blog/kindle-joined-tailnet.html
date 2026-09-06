@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evelyn Coronel | My Kindle joined the tailnet, and my Pi steals its notes</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script src="../../theme.js"></script>
+</head>
+
+<body class="about">
+    <div class="container">
+        <div class="overlay">
+            <header>
+                <div class="nav-header">
+                    <div class="site-brand">
+                        <h2>Evelyn Coronel</h2>
+                        <span class="page-tagline office-tagline">Professional — physicist, ML engineer</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="../../home.html">Personal</a>
+                        <a href="../../about.html" class="active">Professional</a>
+                        <button class="theme-toggle" type="button" hidden>Light</button>
+                    </nav>
+                </div>
+
+                <p><a class="blog-back" href="../../about.html">&larr; back to the office</a></p>
+
+                <h1 class="writing-title">My Kindle joined the tailnet, and my Pi steals its notes</h1>
+                <p class="writing-meta">Sep 2026 &middot; kindle, jailbreak, tailscale, self-hosting</p>
+            </header>
+        </div>
+
+        <div class="overlay">
+            <div class="writing-body">
+
+                <p>
+                    The native Kindle keyboard is a crime against note taking, and pulling highlights
+                    out over USB is archaeology. So I jailbroke a 2015 Paperwhite, put it on my
+                    tailnet with userspace Tailscale, and now <a href="jacinto-raspberry-pi.html">jacinto</a>,
+                    the Raspberry Pi from an earlier post, steals my reading notes into Obsidian
+                    every ten minutes. No cable, no touching the device. The same pattern as
+                    <a href="maradona-pentest-pi.html">the pentest</a>: sensor on one side, Pi on the other.
+                </p>
+
+                <h3>The jailbreak that should not have worked</h3>
+                <p>
+                    My Paperwhite 3, codename Coyote, 7th gen, 2015, sits on firmware 5.16.2.1.1,
+                    the last build Amazon ever gave it. That abandonment is what makes the jailbreak
+                    possible: LanguageBreak (nov 2023) works up to exactly that firmware. Demo mode,
+                    a secret two finger gesture on the bottom right corner, and a payload whose
+                    filename is literally the exploit, dropped byte identical on FAT32. A drag and
+                    drop file manager breaks it silently, the .demo folder is hidden. Full backup
+                    first: the jailbreak wipes everything.
+                </p>
+                <!-- [IMG] Screenshot de KOReader abierto en el Kindle con un libro: media/blog/screenshots/kindle-koreader-book.png -->
+
+                <h3>First, kill the update path</h3>
+                <p>
+                    Kindle on wifi with fresh firmware equals dead jailbreak. Before any network,
+                    the OTA binaries die: renameotabin renames otaupd and otav3 to .bck in
+                    /usr/bin. No KUAL installed, so I ran it through the bridge emergency hook,
+                    a script that executes as root at boot. Log says "OTA BLOCKED OK".
+                </p>
+
+                <h3>Tailscale on 512 MB of RAM</h3>
+                <p>
+                    tailscale_kual runs tailscaled in userspace mode, no TUN device needed, which is
+                    good because a 3.0.35 kernel from 2015 has none. Static ARM binaries. The killer
+                    feature: tailscale up --ssh gives integrated Tailscale SSH, zero dropbear, and
+                    the node shows up as "kindle" on my tailnet. One lesson: the auth key must be
+                    reusable, the first single-use one burned itself when the wifi slept mid
+                    registration. And the screen off means wifi asleep means node offline. The
+                    Kindle is not a 24/7 citizen.
+                </p>
+
+                <h3>The thing that broke the boot</h3>
+                <p>
+                    First persistence attempt: an upstart job with respawn that waited for wifi up
+                    to ninety seconds. Result: white screen after reboot. The framework never
+                    renders the UI, while the system stays alive underneath, the USB volume mounts
+                    fine. Recovery ran through the same bridge hook: remove the job, kill
+                    tailscaled, reboot. Lesson: no extra services on Kindle upstart, the framework
+                    does not tolerate a job that hangs.
+                </p>
+
+                <h3>The hook that stuck</h3>
+                <p>
+                    Final design: nothing at boot. KOReader's launcher carries a hook, if tailscaled
+                    is not running it starts the autostart in the background. Screen on, wifi
+                    active, that is the right moment, because it is exactly when you are reading.
+                </p>
+<pre class="writing-code"># koreader.sh, right after the FW version check
+if ! pidof tailscaled >/dev/null 2>&1; then
+    TS_AUTOSTART="/mnt/us/extensions/tailscale/bin/tailscale-autostart.sh"
+    if [ -f "${TS_AUTOSTART}" ]; then
+        logmsg "tailscale: launching autostart (bg)"
+        nohup sh "${TS_AUTOSTART}" >/dev/null 2>&1 &
+    fi
+fi</pre>
+                <p>
+                    The autostart is an idempotent watchdog: start tailscaled userspace, tailscale
+                    up --ssh, retry with backoff. The whole pipeline lives in a private repo,
+                    including an idempotent patch script that re-applies the hook after KOReader
+                    updates, with a byte identical roundtrip on remove.
+                </p>
+                <!-- [SCHEMA] Diagrama mermaid del pipeline: Kindle (KOReader) -> hook -> tailscaled -> tailnet -> jacinto cron scp sidecars -> mini cron parser --merge -> vault Obsidian: media/blog/diagrams/kindle-pipeline.svg -->
+
+                <h3>The pipeline</h3>
+                <p>
+                    KOReader stores highlights and notes in the book sidecar:
+                    documents/&lt;book&gt;.sdr/metadata.pdf.lua, an annotations table with page,
+                    chapter, color, note and timestamp. jacinto runs a cron every ten minutes:
+                    tailscale ping kindle, and if online, scp the sidecars down, rsync does not
+                    exist in the Kindle busybox. The mini pulls them from jacinto and a parser
+                    merges them into the vault with idempotent dedup.
+                </p>
+
+                <h3>Verification</h3>
+                <p>
+                    End to end, live: opened KOReader with the Kindle unplugged. The hook fired,
+                    tailscaled came up, the node answered with a direct LAN pong in 13 ms, no DERP
+                    relay. ssh root@kindle from the laptop, banner SSH-2.0-Tailscale. jacinto's log:
+                    "kindle online, scraping... done: 3 sidecars". The vault sync: "sync OK: 3
+                    sidecars -&gt; vault", unchanged, idempotent.
+                </p>
+
+                <h3>What it taught me</h3>
+                <ul>
+                    <li>An abandoned device is a perfect sensor. Nobody updates it, so the jailbreak is stable by neglect.</li>
+                    <li>Persistence should match when the device is awake, not force it awake. A daemon that fights the sleep cycle loses.</li>
+                    <li>An e-ink with 512 MB runs userspace Tailscale and SSH without drama, as long as nothing else competes for the RAM.</li>
+                    <li>The note flow is now: highlight on the Kindle, notes in Obsidian, cable never involved.</li>
+                </ul>
+
+                <h3>The reliable choice, again</h3>
+                <p>
+                    The fleet grew a limb. Same lesson as always: self-hosting is a chain of small,
+                    boring decisions, and the most reliable ones are the ones that run while you
+                    sleep. My highlights walk to my vault on their own now.
+                </p>
+
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <span>paraguadiosa</span>
+            <span>&middot;</span>
+            <span>evecoronel.com</span>
+        </footer>
+    </div>
+</body>
+</html>

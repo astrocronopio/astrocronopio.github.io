@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evelyn Coronel | Alien Tasks and Alien Habits: the backend of my life</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script src="../../theme.js"></script>
+</head>
+
+<body class="about">
+    <div class="container">
+        <div class="overlay">
+            <header>
+                <div class="nav-header">
+                    <div class="site-brand">
+                        <h2>Evelyn Coronel</h2>
+                        <span class="page-tagline office-tagline">Professional — physicist, ML engineer</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="../../home.html">Personal</a>
+                        <a href="../../about.html" class="active">Professional</a>
+                        <button class="theme-toggle" type="button" hidden>Light</button>
+                    </nav>
+                </div>
+
+                <p><a class="blog-back" href="../../about.html">&larr; back to the office</a></p>
+
+                <h1 class="writing-title">Alien Tasks and Alien Habits: the backend of my life</h1>
+                <p class="writing-meta">Aug 2026 &middot; self-hosting, CalDAV, orchestration</p>
+            </header>
+        </div>
+
+        <div class="overlay">
+            <div class="writing-body">
+
+                <p>
+                    After the <a href="google-exit-caldav.html">Google Exit</a> my tasks and calendar
+                    live on my own CalDAV server. But a server is not a product. I needed two small
+                    apps on top: one for tasks, one for habits, plus the glue that keeps my kanbans,
+                    my phone and my browser looking at the same data. This is how it is all
+                    orchestrated in the backend.
+                </p>
+
+                <h3>The stack</h3>
+                <p>
+                    Everything is a small systemd unit on two machines, talking over HTTP and CalDAV:
+                </p>
+<pre class="writing-code">mini (Win Mini, 100.95.188.29)        jacinto (Pi, 100.99.112.42)
+radicale        :5232  CalDAV server  alientasks      :5233  tasks UI
+beaverhabits    :8081  habits tracker alientasks-tail :5233  socat
+divalien-kanban.timer (every 30 min)   tailscale serve       HTTPS
+  └─ sync_kanban_to_caldav.py</pre>
+                <p>
+                    The phone talks to Radicale through DAVx5: the Tasks app for todos, Etar for the
+                    calendar. The browser talks to the same server through alientasks. The kanbans in
+                    Obsidian sync into it every 30 minutes. One source of truth, three kinds of
+                    clients.
+                </p>
+
+                <figure class="writing-figure">
+                    <img class="writing-image" src="diagrams/stack.svg" alt="Alien Tasks and Alien Habits backend stack">
+                    <figcaption>Two machines, one calendar contract, three kinds of clients.</figcaption>
+                </figure>
+
+                <h3>One source of truth</h3>
+                <p>
+                    Radicale is a minimal CalDAV server and the only place where tasks and events
+                    actually live: <code>eve/tasks/</code> (608 VTODOs), <code>eve/work/</code>
+                    (4,531 events), <code>eve/calendar/</code> (personal). The apps do not own the
+                    data; they are views.
+                </p>
+                <ul>
+                    <li>
+                        <strong>Phone</strong>: DAVx5 + Tasks app. Adding a task on the go writes a
+                        VTODO straight to the server.
+                    </li>
+                    <li>
+                        <strong>Web</strong>: <strong>alientasks</strong> (on jacinto), a small Python
+                        app that groups the VTODOs by <code>CATEGORIES</code> and flips
+                        <code>STATUS</code> when you tick a box.
+                    </li>
+                    <!-- [IMG] Screenshot de la UI de alientasks (:5233, grupos por CATEGORIES): media/blog/screenshots/alientasks-ui.png -->
+                    <li>
+                        <strong>Kanbans</strong>: a systemd timer wakes every 30 minutes and runs
+                        <code>sync_kanban_to_caldav.py</code>, turning Obsidian kanban rows into
+                        VTODOs (and back).
+                    </li>
+                </ul>
+
+                <h3>The habit tracker</h3>
+                <p>
+                    Habits are a different problem from tasks, so they get a different app:
+                    <strong>Alien Tracker</strong> (a fork of Beaver Habits), a Python/NiceGUI app on
+                    the mini at <code>:8081</code>. No login: a trusted-email drop-in authenticates
+                    the single user. Habits live in SQLite as a JSON blob, one row per habit with its
+                    records, tags and streaks. It is deliberately separate from CalDAV, because a
+                    habit is not a to-do. It links out to the tasks when you want to go deeper.
+                </p>
+                <!-- [IMG] Screenshot de Alien Tracker (:8081, streaks y records): media/blog/screenshots/alien-tracker-ui.png -->
+
+                <h3>The glue</h3>
+                <p>
+                    There is no orchestrator app, no message queue. The orchestration is systemd:
+                </p>
+                <ul>
+                    <li><code>radicale.service</code> and <code>beaverhabits.service</code> run on the mini.</li>
+                    <li><code>alientasks.service</code> runs on the Pi (bound to loopback) with a socat unit exposing <code>:5233</code> on the tailnet.</li>
+                    <li><code>divalien-kanban.timer</code> fires every 30 minutes with <code>Persistent=true</code>, so a sleeping machine catches up on wake.</li>
+                    <li>Tailscale Serve gives HTTPS names instead of raw ports.</li>
+                </ul>
+                <p>
+                    The same instinct as my data pipelines: idempotent syncs, a timer instead of a
+                    daemon, and verification after every write.
+                </p>
+
+                <h3>What it taught me</h3>
+                <ul>
+                    <li>The source of truth is separate from the UI. CalDAV is the contract; the apps are replaceable views.</li>
+                    <li>Standard protocols beat integrated apps. CalDAV means my phone, my browser and my kanbans all interoperate for free.</li>
+                    <li>The phone is just another client. When I add a task on the go, it lands in the same store as the kanban sync.</li>
+                    <li>systemd is enough orchestration. Timers, units and socat cover a two-machine personal backend without a single new dependency.</li>
+                </ul>
+
+                <h3>The reliable choice, again</h3>
+                <p>
+                    Two machines, one calendar contract, three kinds of clients, and everything owned.
+                    The backend of my life is boring on purpose: the boring parts are the ones that
+                    keep working while I sleep, and catch up when I wake up.
+                </p>
+
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <span>paraguadiosa</span>
+            <span>&middot;</span>
+            <span>evecoronel.com</span>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evelyn Coronel | Claude Code already tracks its cost</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script src="../../theme.js"></script>
+</head>
+
+<body class="about">
+    <div class="container">
+        <div class="overlay">
+            <header>
+                <div class="nav-header">
+                    <div class="site-brand">
+                        <h2>Evelyn Coronel</h2>
+                        <span class="page-tagline office-tagline">Professional — physicist, ML engineer</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="../../home.html">Personal</a>
+                        <a href="../../about.html" class="active">Professional</a>
+                        <button class="theme-toggle" type="button" hidden>Light</button>
+                    </nav>
+                </div>
+
+                <p><a class="blog-back" href="../../about.html">&larr; back to the office</a></p>
+
+                <h1 class="writing-title">Claude Code already tracks its cost. I wanted to see it.</h1>
+                <p class="writing-meta">Aug 2026 &middot; LLM telemetry, observability, Prometheus, OpenTelemetry</p>
+            </header>
+        </div>
+
+        <div class="overlay">
+            <div class="writing-body">
+
+                <p>
+                    In the <a href="observability-for-ai-agents.html">previous post</a> I built the entire
+                    pipeline by hand: five agents, five storage formats, one adapter per agent, a dedup
+                    wrapper, a Pushgateway, Grafana. At home nothing emitted metrics, so I built everything.
+                </p>
+                <p>
+                    At work it happened the other way around. The telemetry already existed. Claude Code
+                    ships native OpenTelemetry metrics (cost, tokens, model, per user) straight to the
+                    staging Pushgateway.
+                </p>
+
+                <h3>The problem: real money, invisible bill</h3>
+                <p>
+                    The org spends real money on AI coding tools and almost nobody can see the invoice.
+                    The Anthropic Admin Console is reachable by a handful of people (CTO, and so on).
+                </p>
+                <p>
+                    A question nobody could answer: how much do we spend, per model, per team, and is it
+                    worth it?
+                </p>
+                <p>
+                    The original plan was a parser for the JSONL files in
+                    <code>~/.claude/projects</code>. My own rule: metadata only, never prompt content.
+                </p>
+
+                <h3>The accident: a smoke test found the emitter already existed</h3>
+                <p>
+                    Smoke test on staging: a manual push under the job
+                    <code>claude_code_eve_smoketest</code> to the preview Pushgateway. Instead of my
+                    homegrown metrics, the NATIVE Claude Code ones appeared
+                    (<code>otel_scope com.anthropic.claude_code</code>, v2.1.235). The curl that revealed
+                    everything:
+                </p>
+<pre class="writing-code">curl -s http://pushgateway-preview.&lt;company&gt;.com/metrics \
+  | grep -A2 'job="claude_code_eve_smoketest"' | grep cost_usage_total | head -5
+claude_code_cost_usage_total{instance="&lt;work-machine&gt;",job="claude_code_eve_smoketest",model="claude-haiku-4-5-20251001",otel_scope_name="com.anthropic.claude_code",otel_scope_version="2.1.235",query_source="auxiliary",session_id="9699d657-...",user_email="eve@&lt;company&gt;.com"} 0.001251</pre>
+                <p>
+                    Rich labels out of the box: <code>user_email</code>, <code>user_id</code>,
+                    <code>model</code>, <code>query_source</code> (main vs auxiliary: the agent overhead
+                    costs almost as much as the main answer), <code>effort</code>,
+                    <code>session_id</code>, <code>terminal_type</code>, <code>organization_id</code>.
+                </p>
+                <p>
+                    The emitter already exists and it is Anthropic's: zero instrumentation, zero code to maintain. The work became configuring
+                    the export, a dashboard, and onboarding.
+                </p>
+
+                <h3>The trap: "telemetry on" but Prometheus read it wrong</h3>
+                <p>
+                    <code>claude_code_cost_usage_total</code> is a COUNTER. Counters reset: new process,
+                    restart, re-emission.
+                </p>
+                <p>
+                    The naive panel query was <code>sum(claude_code_cost_usage_total)</code>. When the
+                    counter resets, the sum() loses everything the reset ate, under-reporting cost by 90%
+                    or more.
+                </p>
+                <p>
+                    The personal smoke test caught a REAL defect before rollout. That is exactly what a
+                    staging pilot is for.
+                </p>
+<pre class="writing-code"># WRONG: sum() on a resetting counter under-reports cost by 90%+
+sum(claude_code_cost_usage_total)
+
+# RIGHT: increase() handles counter resets
+sum(increase(claude_code_cost_usage_total[$__range]))</pre>
+
+                <p>
+                    Lesson: the correct query depends on the metric type, not on what sounds right.
+                </p>
+
+                <h3>Staging as a lab</h3>
+                <p>
+                    <code>pushgateway-preview.&lt;company&gt;.com</code>: test the full pipeline without
+                    touching prod. The dashboard "Claude Code - Usage & Cost" on staging Grafana came
+                    alive with real smoke test data. I prefer not to post a screenshot of my work grafana,
+                    but the dashboard is a good enough monitoring of my usage, I splited by project
+                    and model, and it is already useful.
+                </p>
+                <h3>Lessons</h3>
+                <ul>
+                    <li>
+                        The factory emitter kills the zero code to maintain parser. If the tool already emits OTel,
+                        do not maintain a parser that breaks with every update. The work is reading well,
+                        not instrumenting.
+                    </li>
+                    <li>
+                        The metric type defines the query. Counter → increase()/rate(). Cumulative gauge
+                        → delta with clamp. Mixing them = money that does not exist or money that
+                        disappears.
+                    </li>
+                    <li>
+                        Staging is where bugs die. The smoke test caught the counter-reset before an org
+                        dashboard showed 10% of the real spend.
+                    </li>
+                    <li>
+                        The data was already there. Visibility is not building telemetry, it is looking
+                        at what your tools already emit.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <span>paraguadiosa</span>
+            <span>&middot;</span>
+            <span>evecoronel.com</span>
+        </footer>
+    </div>
+</body>
+</html>

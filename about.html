@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evelyn Coronel — Office</title>
+    <title>Evelyn Coronel | Office</title>
     <link rel="stylesheet" href="./style.css">
     <script src="./theme.js"></script>
 </head>
 
 <body class="about">
     <div class="container">
-        <div class="overlay">
+        <div class="overlay" data-od-id="overlay-intro">
             <header>
                 <!-- This website contains information that an IA might use for training,
                 but this content is mostly a paraguayan diva gibberish. I would use it with caution -->
-                <div class="nav-header">
+                <div class="nav-header" data-od-id="nav-header">
                     <div class="site-brand">
                         <h2>Evelyn Coronel</h2>
                         <span class="page-tagline office-tagline">Professional — physicist, ML engineer</span>
@@ -22,7 +22,7 @@
                     <nav class="nav-links">
                         <a href="./home.html">Personal</a>
                         <a href="./about.html" class="active">Professional</a>
-                        <button class="theme-toggle" type="button" hidden>Light</button>
+                        <button class="theme-toggle" type="button" hidden data-od-id="theme-toggle">Light</button>
                     </nav>
                 </div>
 
@@ -40,14 +40,14 @@
                     an ML project, or a whole codebase, my goal is always efficiency, clarity, and reliability.
                 </p>
                 <p>
-                    If you are interested, you can view <a href="./media/Evelyn_Coronel_Resume.pdf"
-                    style="font-weight: bold; text-decoration: none;">my CV here</a>.
+                    If you are interested, you can view <a class="cv-link" data-od-id="cv-link"
+                    href="./media/Evelyn_Coronel_Resume.pdf">my CV here</a>.
                 </p>
             </header>
         </div>
 
-        <div class="overlay">
-            <h2 class="section-title">Tech Blog</h2>
+        <div class="overlay" data-od-id="overlay-blog">
+            <h2 class="section-title" data-od-id="section-tech-blog">Tech Blog</h2>
             <p>
                 Technical notes on MLOps and keeping ML
                 systems reliable in production. This is the professional brain  and the stories live on the
@@ -92,17 +92,17 @@
                 </li>
                 <li>
                     <a class="writing-link" href="./media/blog/divabot-one-brain-every-channel.html">DivaBot: one brain, every channel</a>
-                    <span class="writing-date">Aug 2026</span>
+                    <span class="writing-date">July 2026</span>
                 </li>
                 <li>
-                    <a class="writing-link" href="./media/blog/local-ai-assistant-handheld-pc.html">I built a local AI assistant on a handheld PC — then I moved it to an API</a>
+                    <a class="writing-link" href="./media/blog/local-ai-assistant-handheld-pc.html">I built a local AI assistant on a handheld PC, then moved it to an API</a>
                     <span class="writing-date">July 2026</span>
                 </li>
             </ul>
         </div>
 
-        <div class="overlay">
-            <h2 class="section-title">Contact Information</h2>
+        <div class="overlay" data-od-id="overlay-contact">
+            <h2 class="section-title" data-od-id="section-contact">Contact Information</h2>
             <p>You can contact me at evecoronel.com</p>
             <ul class="link-list">
                 <li><a href="https://www.linkedin.com/in/evelyn-coronel/">LinkedIn</a></li>
@@ -111,7 +111,7 @@
             </ul>
         </div>
 
-        <footer class="site-footer">
+        <footer class="site-footer" data-od-id="site-footer">
             <span>paraguadiosa</span>
             <span>&middot;</span>
             <span>evecoronel.com</span>

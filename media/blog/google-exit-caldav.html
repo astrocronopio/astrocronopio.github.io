@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evelyn Coronel | The Google Exit: calendar and tasks, self-hosted</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script src="../../theme.js"></script>
+</head>
+
+<body class="about">
+    <div class="container">
+        <div class="overlay">
+            <header>
+                <div class="nav-header">
+                    <div class="site-brand">
+                        <h2>Evelyn Coronel</h2>
+                        <span class="page-tagline office-tagline">Professional — physicist, ML engineer</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="../../home.html">Personal</a>
+                        <a href="../../about.html" class="active">Professional</a>
+                        <button class="theme-toggle" type="button" hidden>Light</button>
+                    </nav>
+                </div>
+
+                <p><a class="blog-back" href="../../about.html">&larr; back to the office</a></p>
+
+                <h1 class="writing-title">The Google Exit: calendar and tasks, self-hosted</h1>
+                <p class="writing-meta">Aug 2026 &middot; data migration, CalDAV, self-hosting</p>
+            </header>
+        </div>
+
+        <div class="overlay">
+            <div class="writing-body">
+
+                <p>
+                    I left Google Calendar and Tasks without losing anything. Divorce by stages: first
+                    the furniture, then the keys. This post is the receipts.
+                </p>
+
+                <h3>The plan</h3>
+                <p>
+                    Every piece of data gets exported, migrated to Radicale on jacinto (my Raspberry
+                    Pi, a self-hosted CalDAV server), verified, and only then is Google retired.
+                    Tasks first, then Calendar, then the kanban sync; contacts, Drive, photos and
+                    mail are next.
+                </p>
+
+                <h3>Takeout is the slow way</h3>
+                <p>
+                    Direct export beats Takeout for Calendar: Settings → Import &amp; Export is
+                    instant, Takeout takes hours. Use Takeout only when you want everything at once.
+                </p>
+
+                <h3>The migration</h3>
+                <p>
+                    The migration is the same pipeline instinct as adtech: idempotent by key,
+                    dry-run first, verify after:
+                </p>
+
+                <figure class="writing-figure">
+                    <img class="writing-image" src="diagrams/google-exit.svg" alt="Google Exit migration flow">
+                    <figcaption>Export, migrate, verify, retire.</figcaption>
+                </figure>
+
+                <p>
+                    Live numbers today: 4,531 events in <code>eve/work/</code>, 608 tasks in
+                    <code>eve/tasks/</code>.
+                </p>
+                <ul>
+                    <li>
+                        Tasks: Takeout <code>Tasks.json</code> → one VTODO each, Google list id as
+                        <code>CATEGORIES</code>, task id as UID (idempotent re-runs).
+                    </li>
+                    <li>
+                        Calendar: export → <code>eve/work/</code> (laburo) + <code>eve/calendar/</code>
+                        (personal).
+                    </li>
+                    <li>
+                        Kanban: Obsidian ↔ CalDAV sync, timer every 30 min.
+                    </li>
+                </ul>
+                <p>Bugs that almost ate the calendar:</p>
+                <ul>
+                    <li>
+                        RFC 5545 line folding: Google folds lines over 75 chars, and a folded UID
+                        makes Radicale return 400. Unfold before parsing.
+                    </li>
+                    <li>
+                        Recurrence: master event and RECURRENCE-ID exceptions must live in the same
+                        resource, or clients break the series.
+                    </li>
+                    <li>
+                        XML namespaces: <code>&lt;D:href&gt;</code> matches nothing; use a flexible
+                        regex. Count with a REPORT query, never PROPFIND.
+                    </li>
+                </ul>
+<pre class="writing-code"># RFC 5545: folded lines start with a space, so unfold before parsing
+raw = re.sub(r"\n[ \t]", "", raw)</pre>
+
+                <h3>The phone</h3>
+                <p>
+                    DAVx5 on the phone speaks CalDAV to the Pi: Tasks app for todos, Etar for the
+                    calendar. All 4,531 work events on the phone, and everything syncs back.
+                </p>
+                <!-- [IMG] Screenshot del telefono: DAVx5/Etar mostrando los 4,531 eventos de eve/work/ sincronizados (o el Tasks app con los VTODOs): media/blog/screenshots/phone-caldav-sync.png -->
+
+                <h3>What's left</h3>
+                <p>
+                    Contacts → vCard, Drive → rclone, Photos → Immich, Mail → himalaya. Not done
+                    yet; each one gets the same treatment: export, migrate, verify, retire.
+                </p>
+
+                <h3>What it taught me</h3>
+                <ul>
+                    <li>
+                        The advertised export path (Takeout) is the slow one. Check the direct export
+                        first.
+                    </li>
+                    <li>
+                        Personal data migration is a data pipeline: idempotency, dry-run, real
+                        verification.
+                    </li>
+                    <li>
+                        The format is the contract. RFC 5545 folds lines, and the contract breaks
+                        quietly.
+                    </li>
+                    <li>
+                        Owning your data is a server with your own htpasswd, not a slogan.
+                    </li>
+                </ul>
+
+                <h3>The reliable choice, again</h3>
+                <p>
+                    Google will be fine without my calendar. The question was whether I would be fine
+                    without theirs: the answer was a 4,531-event export and a Raspberry Pi named
+                    <a href="jacinto-raspberry-pi.html">jacinto</a>.
+                </p>
+
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <span>paraguadiosa</span>
+            <span>&middot;</span>
+            <span>evecoronel.com</span>
+        </footer>
+    </div>
+</body>
+</html>

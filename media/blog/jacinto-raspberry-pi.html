@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evelyn Coronel | My AI fleet has a second home: a Raspberry Pi named jacinto</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script src="../../theme.js"></script>
+</head>
+
+<body class="about">
+    <div class="container">
+        <div class="overlay">
+            <header>
+                <div class="nav-header">
+                    <div class="site-brand">
+                        <h2>Evelyn Coronel</h2>
+                        <span class="page-tagline office-tagline">Professional — physicist, ML engineer</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="../../home.html">Personal</a>
+                        <a href="../../about.html" class="active">Professional</a>
+                        <button class="theme-toggle" type="button" hidden>Light</button>
+                    </nav>
+                </div>
+
+                <p><a class="blog-back" href="../../about.html">&larr; back to the office</a></p>
+
+                <h1 class="writing-title">My AI fleet has a second home: a Raspberry Pi named jacinto</h1>
+                <p class="writing-meta">Aug 2026 &middot; self-hosting, Raspberry Pi, agent deployment</p>
+            </header>
+        </div>
+
+        <div class="overlay">
+            <div class="writing-body">
+
+                <p>
+                    After the <a href="observability-for-ai-agents.html">dashboard post</a>, the next
+                    question was: what happens when the Win Mini sleeps? So I gave the fleet a second
+                    home: a Raspberry Pi 3B+ with one gigabyte of RAM, named jacinto.
+                </p>
+                <figure class="writing-figure">
+                    <img class="writing-image" src="screenshots/jacinto.webp" alt="Jacinto">
+                    <figcaption> Jacinto vibing but not just vibecoding. </figcaption>
+                </figure>
+
+                <h3>Why it works</h3>
+                <p>
+                    The brain is thin: the model lives on the API, not the hardware. Same Hermes, same
+                    <code>llm_client.py</code>, and nobody on Discord can tell which machine answers. A
+                    local-only brain could never fit in 1&nbsp;GB.
+                </p>
+
+                <h3>First boot is a haunted house</h3>
+                <p>
+                    A host on the LAN accepted the user <code>pi</code> without being the Pi: verify
+                    the MAC (<code>b8:27:eb:…</code>) before trusting anything. And the modern Pi OS
+                    ignores the <code>country=</code> line in <code>wpa_supplicant.conf</code>: Wi-Fi
+                    stays rfkill-blocked until <code>raspi-config nonint do_wifi_country</code>.
+                </p>            
+                <h3>A second Hermes</h3>
+                <p>
+                    The install kept dying with the SSH tunnel, so it runs under
+                    <code>systemd-run</code>, immune to my connection dropping:
+                </p>
+<pre class="writing-code">ssh jacinto 'systemd-run --user --unit=hermes-install --collect \
+  bash -c "curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash"'</pre>
+                <p>
+                    Cloud provider only (a quantized 8B does not boot in 1&nbsp;GB), and its own
+                    Discord bot token: one token is one connection. The bot is my ops console: I
+                    maintain everything I host on the Pi from its chat. I typed "deploy alienhabits"
+                    and it did: wrote the unit, documented it in its own skill, scrubbed the
+                    password from the chat. Vaultwarden, the sync, the exporter binds, all managed
+                    the same way.
+                </p>
+
+                <figure class="writing-figure">
+                    <img class="writing-image" src="screenshots/jacinto.webp" alt="placeholder">
+                    <figcaption> improve  </figcaption>
+                </figure>
+
+        
+                <h3>The mirror</h3>
+                <p>
+                    Twelve repos cloned over SSH (by rule, bidirectional), Syncthing keeps the vault
+                    (8,617 files) and backups in both machines, and <code>node_exporter</code> feeds a
+                    <code>jacinto-health</code> dashboard (fourteen panels), plus Prometheus and the
+                    Pushgateway answer from the Pi when the Win Mini sleeps. One-gigabyte budget: zram
+                    swap, Bluetooth off, journald capped.
+                </p>
+                <!-- [IMG] Screenshot del dashboard jacinto-health (14 panels, Prometheus scraping al Pi): media/blog/screenshots/jacinto-health-dashboard.png -->
+
+                <figure class="writing-figure">
+                    <img class="writing-image" src="screenshots/jacinto.webp" alt="placeholder">
+                    <figcaption> improve  </figcaption>
+                </figure>
+
+                <h3>What it taught me</h3>
+                <ul>
+                    <li>The brain is thin. If your agent weighs more than the model, you are carrying something heavy for nothing.</li>
+                    <li>Real redundancy is another machine, not another process. A second Hermes with its own bot is a colleague.</li>
+                    <li>Hardware keeps you honest: kernel panics, impostor hosts, Wi-Fi that refuses to unblock. Design (idempotent provision, data off the boot device) beats fixing.</li>
+                    <li>Measure the second home too: two machines, two dashboards, one Prometheus.</li>
+                </ul>
+
+                <h3>The reliable choice, again</h3>
+                <p>
+                    The brain runs wherever it is installed, the data lives in two places, and the
+                    second home cost the price of a microSD card. The API won, again: this time it
+                    bought me a second house.
+                </p>
+
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <span>paraguadiosa</span>
+            <span>&middot;</span>
+            <span>evecoronel.com</span>
+        </footer>
+    </div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evelyn Coronel — DivaBot: one brain, every channel</title>
+    <title>Evelyn Coronel | DivaBot: one brain, every channel</title>
     <link rel="stylesheet" href="../../style.css">
     <script src="../../theme.js"></script>
 </head>
@@ -36,39 +36,40 @@
 
                 <p>
                     In the last post I built a local AI assistant on a handheld PC, learned what a token
-                    costs on hardware I can touch, and admitted the API won. This is the sequel: what
-                    happened after the API won. A model alone is not an assistant — it is a function you
-                    call. To make DIVA actually live in my life I needed a body: two of them, on Discord
-                    and WhatsApp, sharing one brain.
+                    costs on hardware I can touch, and admitted the API won. The lesson of the
+                    handheld PC was about hardware; this one is about architecture. Both were worth
+                    building.
+                </p>
+                <p>
+                    This is the sequel: what happened after the API won. A model alone is not an assistant: it is a function you
+                    call. To make DIVA actually live in my life I needed a channel: Discord.
                 </p>
 
                 <h3>One brain, many channels</h3>
                 <p>
                     The architecture decision that shaped everything was boring and I am proud of it: one
-                    shared LLM client (<code>llm_client.py</code>) used by every frontend. Discord, WhatsApp
-                    and a terminal CLI all call the same
-                    <code>ask_llm(prompt) -&gt; str</code>. Retries, backoff, timeouts, the <code>.env</code>
-                    loading, all live in exactly one place. If I want a Telegram bot tomorrow, I write the
+                    shared LLM client (<code>llm_client.py</code>) used by every frontend. Discord
+                    and a terminal CLI all call the same <code>ask_llm(prompt) -&gt; str</code>.
+                </p>
+                <p>
+                If I want a Telegram bot tomorrow, I write the
                     frontend and nothing else. The frontends do not know or care which model answers them.
                 </p>
 <pre class="writing-code">def ask_llm(prompt: str) -&gt; str:
     if PROVIDER == "deepseek":
         return _ask_deepseek(prompt)
     return _ask_local(prompt)</pre>
+                <!-- [SCHEMA] Arquitectura "one brain, many channels": frontends (Discord, CLI, futuro Telegram) -> ask_llm() -> providers (DeepSeek API, llama.cpp local). Render mermaid a SVG: npx -y @mermaid-js/mermaid-cli -i <x>.mmd -o <x>.svg. Archivo sugerido: diagrams/divabot-architecture.svg -->
                 <p>
-                    This is the same instinct I use at work when I wrap a model behind a gateway: the model
-                    is the part that changes (or gets replaced), so it must be the part that is easy to
-                    swap.
+                    This is the same instinct I use at work: the model is the part that changes (or
+                    gets replaced), so it must be the part that is easy to swap.
                 </p>
 
                 <h3>Two providers, one switch</h3>
                 <p>
                     DIVA can run on the local llama.cpp server or on the DeepSeek API, selected with a
                     single environment variable, <code>LLM_PROVIDER</code>. Both are "OpenAI-compatible"
-                    and yet they are not the same endpoint: llama.cpp exposes
-                    <code>/v1/completions</code> (you send a raw prompt and get <code>text</code> back),
-                    DeepSeek exposes <code>/v1/chat/completions</code> (you send <code>messages</code>
-                    with roles and get <code>message.content</code> back). Same shape, different fields.
+                    and yet they are not the same endpoint. Same shape, different fields.
                     The trick was to make the retry layer take an extractor function, so the only
                     difference between providers is a lambda:
                 </p>
@@ -78,85 +79,31 @@ lambda data: data["choices"][0]["text"].strip()
 lambda data: data["choices"][0]["message"]["content"].strip()</pre>
                 <p>
                     "OpenAI-compatible" is a de facto standard now, and it is a gift: your code does not
-                    care who serves the tokens. This is the same lesson as the last post, applied at a
-                    higher level. Local inference is still there, but the brain is swappable — which is
+                    care who serves the tokens. Local inference is still there, but the brain is swappable, which is
                     exactly why the API can win without a rewrite.
                 </p>
 
-                <h3>Retries, because servers have bad days</h3>
+                <h3>Retries, because servers fail</h3>
                 <p>
                     Every request goes through a retry loop with exponential backoff:
                     <code>sleep(2**attempt)</code>, so 1s, then 2s, then give up and raise a clear error.
-                    Three attempts, no more. Exponential backoff matters because if every client retried
+                    Three attempts, no more.
+                </p>
+                <p>
+                    Exponential backoff matters because if every client retried
                     with a fixed delay, a struggling server would get hit by a synchronized wall of
-                    requests at the same instant — the thundering herd. The lesson from adtech pipelines
-                    applies here too: retries are idempotence for flaky infrastructure. The failed
-                    attempts are logged with which provider and which attempt, so when something is down
-                    you know where to look.
-                </p>
-
-                <h3>Discord: a bot that tells you what is wrong</h3>
-                <p>
-                    The Discord bot needed the Message Content intent, which is <em>privileged</em>: you
-                    have to enable it manually in the developer portal. If you forget, Discord rejects the
-                    connection with close code 4014. The frustrating part: discord.py logs that at DEBUG
-                    level and retries silently for about 15 seconds before raising
-                    <code>PrivilegedIntentsRequired</code>. For a beginner that looks like the bot is
-                    possessed.
-                </p>
-                <p>
-                    So I installed a logging filter on the gateway logger that catches the 4014 as soon as
-                    it appears and rewrites it into a single WARNING with the exact fix: which URL to open,
-                    which toggle to flip. My day job is keeping ML systems reliable in production; the
-                    habit that pays off there is the same: an error message with a runbook attached is
-                    worth ten stack traces. The bot does not just fail, it tells you how to un-fail it.
-                </p>
-
-                <h3>WhatsApp: the undocumented API</h3>
-                <p>
-                    WhatsApp has no public bot API, so the bot runs its own
-                    <a href="https://github.com/WhiskeySockets/Baileys">Baileys</a> bridge — an
-                    unofficial client of the WhatsApp Web protocol, in Node.js. The bridge and the Python
-                    bot are two processes talking over HTTP: the bridge holds the connection, keeps the
-                    session, and exposes a tiny API; the bot polls an inbound queue once per second and
-                    sends replies. It is not elegant, it is <em>practical</em>. One QR scan pairs the
-                    session, and it persists.
-                </p>
-                <p>
-                    Security was a fun problem. The bridge runs in <code>self-chat</code> mode, which
-                    means only my own "Message yourself" chat ever reaches the LLM — strangers are
-                    dropped at the bridge. But I did not stop there: the bot also checks an allowlist of
-                    phone numbers. Defense in depth: if the bridge misbehaves or is run in another mode,
-                    the Python side still refuses to answer strangers. Two layers because one layer is a
-                    single point of failure.
-                </p>
-                <p>
-                    And the dedupe: the bridge keeps its queue in memory, so if it restarts it can
-                    re-deliver the tail of the queue. The bot remembers the IDs it already processed
-                    (bounded set, pruned at 2000 entries) and skips repeats. This is exactly the same
-                    problem as deduplicating clicks and impressions in adtech — events arrive duplicated,
-                    and you make them idempotent by key. I have done this dance in pipelines for years;
-                    doing it for my own bot was oddly satisfying.
+                    requests at the same instant.
                 </p>
 
                 <h3>What building this taught me</h3>
                 <ul>
                     <li>
-                        The model is the commodity, the engineering around it is yours. Two platforms, one
-                        brain, and the brain can be local or remote without touching the frontends.
-                    </li>
-                    <li>
-                        Errors with actionable fixes beat clever logging. The 4014 watchdog converts 15
-                        silent seconds of retrying into one message that says exactly what to click.
+                        The model is the commodity, the engineering around it is yours. Two platforms, either local or remote without touching the frontends.
                     </li>
                     <li>
                         Do not block the event loop. The LLM call is synchronous, so the Discord handler
-                        runs it in a thread (<code>asyncio.to_thread</code>) — otherwise one slow model
+                        runs it in a thread (<code>asyncio.to_thread</code>) otherwise, one slow model
                         response would freeze every other command on the bot.
-                    </li>
-                    <li>
-                        Defense in depth is not paranoia, it is architecture: bridge-level filtering plus
-                        bot-level allowlisting, because any single layer can be misconfigured.
                     </li>
                 </ul>
 
@@ -164,18 +111,11 @@ lambda data: data["choices"][0]["message"]["content"].strip()</pre>
                 <p>
                     Last post I ended with "the practical choice is the reliable one". Nothing changed:
                     the brain still mostly runs on the DeepSeek API, and the local llama.cpp server is a
-                    fallback I can flip to with one variable. The difference is that now it does not
-                    matter which one wins, because the software around it is mine. The lesson of the
-                    handheld PC was about hardware; this one is about architecture. Both were worth
-                    building.
+                    fallback I can flip to with one variable.
                 </p>
                 <p>
-                    And then the brain grew into a fleet. Hermes now orchestrates four agents, all of
-                    them named — yes, I started calling them Divos — and I built a dashboard to measure
-                    what they cost. That is the next post:
-                    <a href="observability-for-ai-agents.html">I put my AI agents on a dashboard</a>.
+                    The difference is that now it does not matter which one wins, because the software around it is mine.
                 </p>
-
             </div>
         </div>
 
