@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evelyn Coronel | One month of learning, day by day</title>
+    <link rel="stylesheet" href="../../style.css">
+    <script src="../../theme.js"></script>
+</head>
+
+<body class="about">
+    <div class="container">
+        <div class="overlay">
+            <header>
+                <div class="nav-header">
+                    <div class="site-brand">
+                        <h2>Evelyn Coronel</h2>
+                        <span class="page-tagline office-tagline">Professional — physicist, ML engineer</span>
+                    </div>
+                    <nav class="nav-links">
+                        <a href="../../home.html">Personal</a>
+                        <a href="../../about.html" class="active">Professional</a>
+                        <button class="theme-toggle" type="button" hidden>Light</button>
+                    </nav>
+                </div>
+
+                <p><a class="blog-back" href="../../about.html">&larr; back to the office</a></p>
+
+                <h1 class="writing-title">One month of learning, day by day</h1>
+                <p class="writing-meta">Sep 2026 &middot; learning in public, projects timeline</p>
+            </header>
+        </div>
+
+        <div class="overlay">
+            <div class="writing-body">
+
+                <p>
+                    On July 26 I started the project I had been postponing for a while: stop treating
+                    inference as a black box and run my own agents on hardware I can touch. One month
+                    later I have a fleet of agents across two machines, my calendar and my tasks out of
+                    Google, my habits and my reading notes self-hosted, a Grafana dashboard that tells
+                    me what every agent costs, and this website as the public face of all of it.
+                </p>
+                <p>
+                    This page is the log of that month, day by day. Every date is the day the work
+                    landed in a repo or on a machine, taken from first commits and file timestamps.
+                    The public projects are linked. The rest are still private: they are named here,
+                    and that is all.
+                </p>
+
+                <h3>Week 1 &middot; Jul 26 – Aug 1: local inference</h3>
+                <p>
+                    The mission: know what a token actually costs on hardware I own. The first GGUFs
+                    (Hermes 3.1 8B, Qwythos-9B MTP, Gemma 12B, Qwen3.5-9B) were already sitting in
+                    <code>~/models</code> from the days before. Then came the real work: ROCm,
+                    llama.cpp, and a BIOS trick.
+                </p>
+
+                <div class="timeline">
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Jul 26</p>
+                        <p>
+                            Chose the machine and the cast. The machine: a Win Mini 2025 (Ryzen AI 9,
+                            64 GB of unified memory) running Nobara. The cast: DIVA, a Hermes agent
+                            with a Discord frontend and a Moria Casán personality. I also wrote the
+                            tradeoff note that kept me honest: a Dell server vs. the handheld.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Jul 27</p>
+                        <p>
+                            Set up Nobara for llama.cpp and downloaded the serious tests: Qwen3.6
+                            27B, 35B and 40B GGUFs. Day notes on my own setup: "qwen on the win mini".
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Jul 29</p>
+                        <p>
+                            Installed LM Studio as a second UI for quick model swaps. The llama.cpp
+                            server stayed the workhorse.
+                        </p>
+                    </div>
+
+                </div>
+
+                <p>
+                    By the end of the week the numbers were clear: 4 t/s out of the box, 9 t/s with
+                    an MTP draft head, and 17 t/s after giving the GPU 32 GB of UMA in BIOS — all on
+                    a 9B Q6_K. A 27B crawled at 4 t/s. The verdict hurt: 17 t/s still cannot serve
+                    long agent sessions. The brain moved to the DeepSeek API. The full story is
+                    <a href="local-ai-assistant-handheld-pc.html">its own post</a>.
+                </p>
+
+                <h3>Week 2 &middot; Aug 2 – 8: one brain, every channel</h3>
+
+                <div class="timeline">
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 3</p>
+                        <p>
+                            Collected the Moria-style dataset (24 QA pairs) that would power the
+                            fine-tune later, and captured the screenshot that opens the local-inference
+                            post.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 4</p>
+                        <p>
+                            Two private projects start. <strong>smarter-obsidian</strong>: a read-only
+                            audit of a four-year Obsidian vault, the first phase of giving every note a
+                            provenance and a lifecycle tag without touching the text. <strong>ml_portfolio</strong>:
+                            the scaffolding for a fully public fine-tune plus drift project.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 7</p>
+                        <p>
+                            <strong>DivaBot</strong> goes public
+                            (<a href="https://github.com/paraguadiosa/DivaBot">repo</a>). One shared LLM layer — DeepSeek API or a
+                            local llama.cpp server — with two frontends: a Discord command bot and a
+                            WhatsApp bot through a Baileys bridge. The story:
+                            <a href="divabot-one-brain-every-channel.html">one brain, every channel</a>.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>Week 3 &middot; Aug 9 – 16: the portfolio and the loop</h3>
+
+                <div class="timeline">
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 10</p>
+                        <p>
+                            DivaBot v2: the bots become systemd services, remote access gets designed,
+                            and WhatsApp only answers your own self-chat — strangers are dropped.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 13</p>
+                        <p>
+                            First real fine-tune run in <strong>ml_portfolio</strong> (private): LoRA on
+                            <code>gpt2-small-spanish</code>, trained on the Moria dataset, plus the
+                            reference embeddings the drift detector will compare against.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 14</p>
+                        <p>
+                            <strong>amsterdam</strong> goes public
+                            (<a href="https://github.com/paraguadiosa/amsterdam">repo</a>), born with secret-safety gates: gitleaks
+                            pre-push hooks, a hardened <code>.gitignore</code>, an
+                            <code>.env.example</code>. Same day, ml_portfolio gets its FastAPI deploy.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 15</p>
+                        <p>
+                            amsterdam ships as a Docker image. Backed up the
+                            <strong>alienhabits</strong> fork — the seed of the whole alien self-hosted
+                            family.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 16</p>
+                        <p>
+                            The agent loop, learned in public. <strong>aprendiendo-agentes</strong> (private):
+                            the bare loop by hand, then LangChain, then LangGraph, then an ML agent whose
+                            numbers come from real tools. <strong>kimi-war-games</strong> (private): first
+                            authorized red/blue run — Kimi K3 attacks this machine while a blue agent
+                            watches and reports.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>Week 4 &middot; Aug 17 – 23: the Google Exit and the pivot to Grafana</h3>
+
+                <div class="timeline">
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 18</p>
+                        <p>
+                            Google Exit, day one: Takeout downloaded, migration scripts for tasks and
+                            calendar, Radicale cloned as the self-hosted CalDAV home. Same day, the two
+                            public apps were born: <strong>alientasks</strong>
+                            (<a href="https://github.com/paraguadiosa/alientasks">repo</a>, CalDAV task UI) and
+                            <strong>alientracker</strong>
+                            (<a href="https://github.com/paraguadiosa/alientracker">repo</a>, habit tracker), which got todos, mobile layout
+                            and CI on its first day.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 19</p>
+                        <p>
+                            alientasks: alien-green favicon and an English UI. alientracker: a red-team
+                            security review with fixes, plus a solarized light theme. amsterdam: first
+                            usage-monitor landing page with spend charts.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 20</p>
+                        <p>
+                            Google Exit continues: the kanban-to-CalDAV sync script. alientracker grows
+                            <em>unhabits</em> — things to stop doing, tracked in red. Planned the Claude
+                            Code telemetry MVP.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 21</p>
+                        <p>
+                            The observability pivot. Two private repos: the
+                            <strong>telemetry</strong> wrapper (one adapter per agent, one event shape
+                            out) and the <strong>observability</strong> stack (Pushgateway, Prometheus,
+                            Grafana). amsterdam drops its in-repo monitor and links out to Grafana
+                            instead. Cloned OpenDesign to study a third orchestrator.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 22</p>
+                        <p>
+                            <strong>alienstation</strong> (private) first commits: the alien portal over
+                            the tailnet. Cost panels persist in the agent-telemetry dashboard. telemetry
+                            gains an mlflow subcommand and an OpenDesign adapter. amsterdam: alien-green
+                            palette and a hardened daemon.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>Week 5 &middot; Aug 24 – 30: a second home for the fleet</h3>
+                <p>
+                    A Raspberry Pi 3B+ with one gigabyte of RAM joins the fleet, gets named
+                    <strong>jacinto</strong>, and is pentested on the very day it arrives.
+                </p>
+
+                <div class="timeline">
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 24</p>
+                        <p>
+                            Pushgateway data survives restarts. Grafana's root URL is renamed to its new
+                            hostname, <code>mini</code>. The Raspberry Pi server plan is written.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 25</p>
+                        <p>
+                            jacinto joins the observability stack: compose and Prometheus for the Pi,
+                            node_exporter, a health dashboard, per-process RAM panels. First alert
+                            rules with Alertmanager to Discord. TSDB backups run 2-2 between mini and
+                            jacinto. Cost panels break down by server and agent. Same day, the
+                            authorized pentest: Maradona found the hole in twenty minutes. Full story:
+                            <a href="jacinto-raspberry-pi.html">jacinto's post</a> and
+                            <a href="maradona-pentest-pi.html">the pentest post</a>.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 26</p>
+                        <p>
+                            alientasks runs on the Pi in an alien-terminal skin and syncs with the phone
+                            through DAVx5. The backend story:
+                            <a href="alien-habits-tasks-backend.html">the backend of my life</a>.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 27</p>
+                        <p>
+                            amsterdam: the sortable spend table — tokens, sessions and cost per model —
+                            merging the Hermes state database and Pi session logs. Cloned MoneyMatter to
+                            self-host a budget tracker too.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 28</p>
+                        <p>
+                            Audit day. Reviewed the whole tailnet (mini and the Pi);
+                            <strong>audit-backups</strong> (private) holds the findings and the fixes.
+                            alienstation gets the Matrix-style code rain, the Area 69 board and a boot
+                            sequence. amsterdam adds the Alibaba/DashScope provider.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 29</p>
+                        <p>
+                            jacinto's dashboard gains per-process RAM panels. Evening: the first posts of
+                            the month get written — local inference, the pentest, the Google Exit, the
+                            alien backend.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 30</p>
+                        <p>
+                            The Kindle chapter. <strong>kindle-diva</strong> (private): jailbreak plan,
+                            KOReader hooks, tailnet pipeline. <strong>diva-bridge</strong> (private): a
+                            TDD skeleton, then RSS feeds for KOReader. observability: kindle-health
+                            dashboards and a dashboard sync script. alienstation: a gzip/ETag static
+                            server and a ~6x cheaper rain animation.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>Week 6 &middot; Aug 31 – Sep 4: publishing the month</h3>
+
+                <div class="timeline">
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Aug 31</p>
+                        <p>
+                            diva-bridge: <code>/feed/tasks</code> and <code>/feed/habits</code> RSS; the
+                            e-ink browser reaches it over tailnet and LAN; Radicale locks to loopback.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Sep 1</p>
+                        <p>
+                            Site relaunch (v4.2): the
+                            <a href="observability-for-ai-agents.html">observability</a>,
+                            <a href="claude-code-already-tracks-cost.html">Claude Code</a> and
+                            <a href="jacinto-raspberry-pi.html">jacinto</a> posts go public, and
+                            amsterdam's usage page goes live.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Sep 2</p>
+                        <p>
+                            A Pi Zero v1.3 joins as a USB gadget: job Prometheus and a zero-health
+                            dashboard.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Sep 3</p>
+                        <p>
+                            The actual jailbreak: LanguageBreak on Coyote, a 2015 Paperwhite 3 stuck on
+                            the last firmware Amazon ever gave it. The story:
+                            <a href="kindle-joined-tailnet.html">kindle joined the tailnet</a>.
+                        </p>
+                    </div>
+
+                    <div class="tl-entry">
+                        <p class="tl-date">Sep 4</p>
+                        <p>
+                            This page: one month of learning, day by day.
+                        </p>
+                    </div>
+
+                </div>
+
+                <h3>What the month taught me</h3>
+                <ul>
+                    <li>
+                        An agent is a loop: the model asks, the code executes, the result goes back.
+                        Everything else is dressing.
+                    </li>
+                    <li>
+                        Measurement beats memory. Costs, health, drift: if you do not dashboard it,
+                        you do not know it.
+                    </li>
+                    <li>
+                        Self-hosting is a discipline. My calendar, tasks, habits and notes live on
+                        machines I own, and every box is a chance to learn something I used to rent.
+                    </li>
+                    <li>
+                        Publish early. The first posts went up on Aug 29; this log is the same habit
+                        one step further.
+                    </li>
+                </ul>
+
+                <p>
+                    Every date above is the day the work landed in a repo or on a machine, from git
+                    logs and file timestamps. The next month starts the same way: a repo, a date, and
+                    something that works.
+                </p>
+
+            </div>
+        </div>
+
+        <footer class="site-footer">
+            <span>paraguadiosa</span>
+            <span>&middot;</span>
+            <span>evecoronel.com</span>
+        </footer>
+    </div>
+</body>
+</html>
