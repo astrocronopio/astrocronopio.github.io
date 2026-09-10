@@ -723,6 +723,10 @@ h2.writing-title {
         gap: 14px 20px;
     }
 
+    .nav-links a {
+        padding-block: 12px;
+    }
+
     .theme-toggle {
         min-height: 44px;
         padding: 10px 18px;
@@ -732,8 +736,27 @@ h2.writing-title {
         padding-block: 12px;
     }
 
+    .writing-link {
+        display: inline-block;
+        padding-block: 10px;
+    }
+
+    .link-list a {
+        display: inline-block;
+        padding-block: 12px;
+    }
+
+    .cv-link {
+        display: inline-block;
+        padding-block: 12px;
+    }
+
+    .blog-back {
+        padding-block: 12px;
+    }
+
     .writing-date {
-        font-size: 0.68rem;
+        font-size: 0.75rem;
     }
 }
 
